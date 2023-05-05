@@ -1,5 +1,6 @@
 package com.izumi.exception;
 
+import com.izumi.base.CommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -11,14 +12,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
-    public String handler(Exception e) {
+    public CommonResult handler(Exception e) {
         log.error("异常", e);
-        return "ex" + e.getMessage();
+        return CommonResult.fail(e.getMessage());
     }
 
     @ExceptionHandler(ServiceException.class)
-    public String serviceExceptionHandler(ServiceException e) {
+    public CommonResult serviceExceptionHandler(ServiceException e) {
         log.error("业务异常:", e);
-        return e.getCode() + "," + e.getMessage();
+        return CommonResult.fail(9910, e.getMessage());
     }
 }
