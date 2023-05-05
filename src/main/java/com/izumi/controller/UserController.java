@@ -3,6 +3,8 @@ package com.izumi.controller;
 import cn.hutool.db.DbUtil;
 import cn.hutool.db.Entity;
 import com.izumi.exception.ServiceException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,13 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@Api(tags = "用户管理")
 public class UserController {
     private final DataSource dataSource;
     private final RedisTemplate<String ,String> redisTemplate;
 
     @GetMapping("/hello")
+    @ApiOperation(value = "获取用户信息") // 备注接口名称
     public String hello() {
         log.debug("UserController.hello");
         return "hello" + 1 / 0;
