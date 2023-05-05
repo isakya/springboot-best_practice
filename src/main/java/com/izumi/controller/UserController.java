@@ -5,6 +5,8 @@ import cn.hutool.db.Entity;
 import com.izumi.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final DataSource dataSource;
+    private final RedisTemplate<String ,String> redisTemplate;
 
     @GetMapping("/hello")
     public String hello() {
@@ -33,5 +36,11 @@ public class UserController {
         System.out.println(dataSource);
         List<Entity> list = DbUtil.use().findAll("sys_user");
         return list;
+    }
+
+    // 从redis中取数据
+    @GetMapping("/getFromRedis")
+    public String getFromRedis(String key) {
+        return redisTemplate.opsForValue().get(key);
     }
 }
