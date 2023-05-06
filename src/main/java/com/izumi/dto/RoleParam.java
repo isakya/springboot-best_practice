@@ -1,5 +1,6 @@
 package com.izumi.dto;
 
+import com.izumi.validation.FlagValidator;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,4 +20,7 @@ public class RoleParam {
     @ApiModelProperty("唯一编码")
     @NotBlank(message = "唯一编码不能为空")
     private String code;
+    @ApiModelProperty("角色类型")
+    @FlagValidator(values = "1,2,3", message = "角色类型只能为1,2,3")
+    private Integer roleType;
 }
