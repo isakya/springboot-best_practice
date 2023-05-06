@@ -1,5 +1,7 @@
 package com.izumi.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,6 +12,7 @@ import lombok.Data;
 @TableName("sys_role")
 public class Role {
     @ApiModelProperty("角色ID")
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     @ApiModelProperty("角色名称")
     private String name;

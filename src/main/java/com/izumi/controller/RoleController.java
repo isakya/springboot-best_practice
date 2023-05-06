@@ -1,5 +1,7 @@
 package com.izumi.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.izumi.base.CommonPage;
 import com.izumi.base.CommonResult;
 import com.izumi.base.IdParam;
@@ -12,13 +14,13 @@ import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 
 @RestController
 @Api(tags = "角色管理")
@@ -29,12 +31,15 @@ public class RoleController {
 
     /**
      * 添加角色
-     * @param role
+     * @param param
      * @return
      */
     @PostMapping("/role/save")
     @ApiOperation(value = "添加角色")
-    public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) RoleParam role) {
+    public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) RoleParam param) {
+        Role role = new Role();
+        BeanUtils.copyProperties(param, role);
+        roleMapper.insert(role);
         return CommonResult.ok();
     }
 
@@ -46,17 +51,21 @@ public class RoleController {
     @PostMapping("/role/remove")
     @ApiOperation(value = "删除角色")
     public CommonResult<?> remove(@RequestBody IdsParam param) {
+        roleMapper.deleteBatchIds(param.getIds());
         return CommonResult.ok();
     }
 
     /**
      * 修改角色
-     * @param role
+     * @param param
      * @return
      */
     @PostMapping("/role/update")
     @ApiOperation(value = "修改角色")
-    public CommonResult<?> update(@RequestBody @Validated({Groups.Update.class}) RoleParam role) {
+    public CommonResult<?> update(@RequestBody @Validated({Groups.Update.class}) RoleParam param) {
+        Role role = new Role();
+        BeanUtils.copyProperties(param, role);
+        roleMapper.updateById(role);
         return CommonResult.ok();
     }
 
@@ -80,19 +89,8 @@ public class RoleController {
     @PostMapping("/role/page")
     @ApiOperation(value = "查询角色列表")
     public CommonResult<CommonPage<Role>> page(@RequestBody RolePageParam param) {
-        CommonPage<Role> page = new CommonPage<>();
-        page.setPageNum(1);
-        page.setPageSize(10);
-        page.setTotalPage(100);
-        page.setRecordCount(10);
-        page.setRows(new ArrayList<>());
-        for (int i = 0; i < 10; i++) {
-            Role role = new Role();
-            role.setId(new Long(i));
-            role.setName("role" + i);
-            role.setCode("name" + i);
-            page.getRows().add(role);
-        }
-        return CommonResult.data(page);
+        IPage<Role> page = param.buildMpPage();
+        roleMapper.selectPage(page, Wrappers.emptyWrapper());
+        return CommonResult.data(CommonPage.toPage(page));
     }
 }
