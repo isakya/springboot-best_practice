@@ -1,5 +1,9 @@
 package com.izumi.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.izumi.base.CommonPage;
@@ -20,6 +24,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -90,7 +96,25 @@ public class RoleController {
     @ApiOperation(value = "查询角色列表")
     public CommonResult<CommonPage<Role>> page(@RequestBody RolePageParam param) {
         IPage<Role> page = param.buildMpPage();
-        roleMapper.selectPage(page, Wrappers.emptyWrapper());
+        QueryWrapper<Role> queryWrapper = Wrappers.query();
+        if(StrUtil.isNotEmpty(param.getM_EQ_code())) {
+            queryWrapper.eq("code", param.getM_EQ_code());
+        }
+        if(StrUtil.isNotEmpty(param.getM_EQ_name())) {
+            queryWrapper.eq("name", param.getM_EQ_name());
+        }
+        if(StrUtil.isNotEmpty(param.getM_LIKE_name())) {
+            queryWrapper.like("name", param.getM_LIKE_name());
+        }
+        if(CollectionUtil.isNotEmpty(param.getM_BT_id()) && param.getM_BT_id().size() == 2) {
+            Long value1 = param.getM_BT_id().get(0);
+            Long value2 = param.getM_BT_id().get(1);
+            queryWrapper.between("id", value1, value2);
+        }
+        if(CollectionUtil.isNotEmpty(param.getM_IN_roleType())) {
+            queryWrapper.in("role_type", param.getM_IN_roleType());
+        }
+        roleMapper.selectPage(page, queryWrapper);
         return CommonResult.data(CommonPage.toPage(page));
     }
 }
