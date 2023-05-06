@@ -8,8 +8,10 @@ import com.izumi.dto.RolePageParam;
 import com.izumi.dto.RoleParam;
 import com.izumi.entity.Role;
 import com.izumi.entity.User;
+import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +29,7 @@ public class RoleController {
      */
     @PostMapping("/role/save")
     @ApiOperation(value = "添加角色")
-    public CommonResult<?> save(@RequestBody RoleParam role) {
+    public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) RoleParam role) {
         return CommonResult.ok();
     }
 
@@ -49,7 +51,7 @@ public class RoleController {
      */
     @PostMapping("/role/update")
     @ApiOperation(value = "修改角色")
-    public CommonResult<?> update(@RequestBody RoleParam role) {
+    public CommonResult<?> update(@RequestBody @Validated({Groups.Update.class}) RoleParam role) {
         return CommonResult.ok();
     }
 
