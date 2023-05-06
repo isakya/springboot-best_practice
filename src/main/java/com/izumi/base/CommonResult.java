@@ -27,7 +27,9 @@ public class CommonResult<T> {
     public static CommonResult data(Object data) {
         return new CommonResult(0, "成功", data);
     }
-
+    public static CommonResult ok() {
+        return new CommonResult(0, "成功", null);
+    }
     public static CommonResult fail(String msg) {
         return new CommonResult(9999, msg, null);
     }
