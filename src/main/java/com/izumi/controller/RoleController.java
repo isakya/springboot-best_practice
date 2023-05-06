@@ -7,21 +7,26 @@ import com.izumi.base.IdsParam;
 import com.izumi.dto.RolePageParam;
 import com.izumi.dto.RoleParam;
 import com.izumi.entity.Role;
-import com.izumi.entity.User;
+import com.izumi.mapper.RoleMapper;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @Api(tags = "角色管理")
+@RequiredArgsConstructor
 public class RoleController {
+    @Autowired
+    private RoleMapper roleMapper;
+
     /**
      * 添加角色
      * @param role
@@ -63,10 +68,7 @@ public class RoleController {
     @PostMapping("/role/info")
     @ApiOperation(value = "查询单个角色")
     public CommonResult<Role> info(@RequestBody IdParam param) {
-        Role role = new Role();
-        role.setId(1L);
-        role.setCode("default");
-        role.setName("默认角色");
+        Role role = roleMapper.selectById(param.getId());
         return CommonResult.data(role);
     }
 
