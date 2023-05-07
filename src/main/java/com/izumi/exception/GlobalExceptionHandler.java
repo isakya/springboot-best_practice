@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     public CommonResult serviceExceptionHandler(ServiceException e) {
         log.error("业务异常:", e);
-        return CommonResult.fail(9910, e.getMessage());
+        return CommonResult.fail(e.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -11,15 +11,18 @@ import com.izumi.mapper.RoleMapper;
 import com.izumi.service.RoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
     @Override
+    @Transactional(rollbackFor = Exception.class) // 表示所有的异常都要回滚
     public boolean save(RoleParam param) {
         Role role = new Role();
         BeanUtils.copyProperties(param, role);
+        // ServiceException.throwBiz(999, "事务异常测试");
         return super.save(role);
     }
 
