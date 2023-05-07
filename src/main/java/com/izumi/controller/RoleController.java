@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -96,25 +97,9 @@ public class RoleController {
     @ApiOperation(value = "查询角色列表")
     public CommonResult<CommonPage<Role>> page(@RequestBody RolePageParam param) {
         IPage<Role> page = param.buildMpPage();
-        QueryWrapper<Role> queryWrapper = Wrappers.query();
-        if(StrUtil.isNotEmpty(param.getM_EQ_code())) {
-            queryWrapper.eq("code", param.getM_EQ_code());
-        }
-        if(StrUtil.isNotEmpty(param.getM_EQ_name())) {
-            queryWrapper.eq("name", param.getM_EQ_name());
-        }
-        if(StrUtil.isNotEmpty(param.getM_LIKE_name())) {
-            queryWrapper.like("name", param.getM_LIKE_name());
-        }
-        if(CollectionUtil.isNotEmpty(param.getM_BT_id()) && param.getM_BT_id().size() == 2) {
-            Long value1 = param.getM_BT_id().get(0);
-            Long value2 = param.getM_BT_id().get(1);
-            queryWrapper.between("id", value1, value2);
-        }
-        if(CollectionUtil.isNotEmpty(param.getM_IN_roleType())) {
-            queryWrapper.in("role_type", param.getM_IN_roleType());
-        }
-        roleMapper.selectPage(page, queryWrapper);
+        QueryWrapper<Role> queryWrapper = param.buildQueryWrapper();
+        List<Role> list = roleMapper.selectCustom(page, queryWrapper);
+        page.setRecords(list);
         return CommonResult.data(CommonPage.toPage(page));
     }
 }
