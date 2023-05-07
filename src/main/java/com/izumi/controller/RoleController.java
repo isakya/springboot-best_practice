@@ -1,11 +1,5 @@
 package com.izumi.controller;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.izumi.base.CommonPage;
 import com.izumi.base.CommonResult;
 import com.izumi.base.IdParam;
@@ -14,6 +8,7 @@ import com.izumi.dto.RolePageParam;
 import com.izumi.dto.RoleParam;
 import com.izumi.entity.Role;
 import com.izumi.mapper.RoleMapper;
+import com.izumi.service.RoleService;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,16 +20,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
 @Api(tags = "角色管理")
 @RequiredArgsConstructor
 public class RoleController {
-    @Autowired
-    private RoleMapper roleMapper;
+    private final RoleService roleService;
 
     /**
      * 添加角色
@@ -44,9 +36,7 @@ public class RoleController {
     @PostMapping("/role/save")
     @ApiOperation(value = "添加角色")
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) RoleParam param) {
-        Role role = new Role();
-        BeanUtils.copyProperties(param, role);
-        roleMapper.insert(role);
+        roleService.save(param);
         return CommonResult.ok();
     }
 
@@ -58,7 +48,7 @@ public class RoleController {
     @PostMapping("/role/remove")
     @ApiOperation(value = "删除角色")
     public CommonResult<?> remove(@RequestBody IdsParam param) {
-        roleMapper.deleteBatchIds(param.getIds());
+        roleService.removeBatchByIds(param.getIds());
         return CommonResult.ok();
     }
 
@@ -70,9 +60,7 @@ public class RoleController {
     @PostMapping("/role/update")
     @ApiOperation(value = "修改角色")
     public CommonResult<?> update(@RequestBody @Validated({Groups.Update.class}) RoleParam param) {
-        Role role = new Role();
-        BeanUtils.copyProperties(param, role);
-        roleMapper.updateById(role);
+        roleService.update(param);
         return CommonResult.ok();
     }
 
@@ -81,10 +69,10 @@ public class RoleController {
      * @param param
      * @return
      */
-    @PostMapping("/role/info")
+    @PostMapping("/role/getById")
     @ApiOperation(value = "查询单个角色")
-    public CommonResult<Role> info(@RequestBody IdParam param) {
-        Role role = roleMapper.selectById(param.getId());
+    public CommonResult<Role> getById(@RequestBody IdParam param) {
+        Role role = roleService.getById(param.getId());
         return CommonResult.data(role);
     }
 
@@ -96,10 +84,6 @@ public class RoleController {
     @PostMapping("/role/page")
     @ApiOperation(value = "查询角色列表")
     public CommonResult<CommonPage<Role>> page(@RequestBody RolePageParam param) {
-        IPage<Role> page = param.buildMpPage();
-        QueryWrapper<Role> queryWrapper = param.buildQueryWrapper();
-        List<Role> list = roleMapper.selectCustom(page, queryWrapper);
-        page.setRecords(list);
-        return CommonResult.data(CommonPage.toPage(page));
+        return CommonResult.data(roleService.page(param));
     }
 }
