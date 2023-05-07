@@ -1,7 +1,7 @@
-package com.izumi.dto;
+package com.izumi.modules.sys.dto;
 
 import com.izumi.base.PageParam;
-import com.izumi.entity.Role;
+import com.izumi.modules.sys.entity.Role;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 

@@ -1,11 +1,10 @@
-package com.izumi.service;
+package com.izumi.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.izumi.base.CommonPage;
-import com.izumi.dto.UserPageParam;
-import com.izumi.dto.UserParam;
-import com.izumi.entity.Role;
-import com.izumi.entity.User;
+import com.izumi.modules.sys.dto.UserPageParam;
+import com.izumi.modules.sys.dto.UserParam;
+import com.izumi.modules.sys.entity.User;
 
 public interface UserService extends IService<User> {
     /**

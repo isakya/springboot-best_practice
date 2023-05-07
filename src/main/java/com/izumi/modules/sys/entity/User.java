@@ -1,4 +1,4 @@
-package com.izumi.entity;
+package com.izumi.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

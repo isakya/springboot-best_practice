@@ -1,20 +1,17 @@
-package com.izumi.controller;
+package com.izumi.modules.sys.controller;
 
 import com.izumi.base.CommonPage;
 import com.izumi.base.CommonResult;
 import com.izumi.base.IdParam;
 import com.izumi.base.IdsParam;
-import com.izumi.dto.RolePageParam;
-import com.izumi.dto.RoleParam;
-import com.izumi.entity.Role;
-import com.izumi.mapper.RoleMapper;
-import com.izumi.service.RoleService;
+import com.izumi.modules.sys.dto.RolePageParam;
+import com.izumi.modules.sys.dto.RoleParam;
+import com.izumi.modules.sys.entity.Role;
+import com.izumi.modules.sys.service.RoleService;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

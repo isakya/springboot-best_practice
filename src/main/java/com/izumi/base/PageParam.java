@@ -34,6 +34,12 @@ public class PageParam<T> {
      * 构建mybatis-plus分页对象
      */
     public IPage buildMpPage() {
+        if(pageNum == null) {
+            this.pageNum = 1;
+        }
+        if(pageSize == null) {
+            this.pageSize = 10;
+        }
         Page page = new Page(getPageNum(), getPageSize(), !Boolean.FALSE.equals(isCount));
         return page;
     }

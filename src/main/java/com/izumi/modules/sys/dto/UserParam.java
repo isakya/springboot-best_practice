@@ -1,4 +1,4 @@
-package com.izumi.dto;
+package com.izumi.modules.sys.dto;
 
 
 import com.izumi.validation.Groups;

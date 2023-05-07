@@ -1,14 +1,14 @@
-package com.izumi.service.impl;
+package com.izumi.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.izumi.base.CommonPage;
-import com.izumi.dto.RolePageParam;
-import com.izumi.dto.RoleParam;
-import com.izumi.entity.Role;
-import com.izumi.mapper.RoleMapper;
-import com.izumi.service.RoleService;
+import com.izumi.modules.sys.dto.RolePageParam;
+import com.izumi.modules.sys.dto.RoleParam;
+import com.izumi.modules.sys.entity.Role;
+import com.izumi.modules.sys.mapper.RoleMapper;
+import com.izumi.modules.sys.service.RoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

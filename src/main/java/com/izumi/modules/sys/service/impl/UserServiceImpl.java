@@ -1,14 +1,14 @@
-package com.izumi.service.impl;
+package com.izumi.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.izumi.base.CommonPage;
-import com.izumi.dto.UserPageParam;
-import com.izumi.dto.UserParam;
-import com.izumi.entity.User;
-import com.izumi.mapper.UserMapper;
-import com.izumi.service.UserService;
+import com.izumi.modules.sys.dto.UserPageParam;
+import com.izumi.modules.sys.dto.UserParam;
+import com.izumi.modules.sys.entity.User;
+import com.izumi.modules.sys.mapper.UserMapper;
+import com.izumi.modules.sys.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

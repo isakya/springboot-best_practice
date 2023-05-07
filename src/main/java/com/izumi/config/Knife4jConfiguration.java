@@ -30,7 +30,7 @@ public class Knife4jConfiguration {
                 .groupName("V1.0")
                 .select()
                 //这里指定Controller扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.izumi.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.izumi.modules.sys.controller"))
                 .paths(PathSelectors.any())
                 .build();
         return docket;

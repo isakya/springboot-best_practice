@@ -1,13 +1,13 @@
-package com.izumi.controller;
+package com.izumi.modules.sys.controller;
 
 import com.izumi.base.CommonPage;
 import com.izumi.base.CommonResult;
 import com.izumi.base.IdParam;
 import com.izumi.base.IdsParam;
-import com.izumi.dto.UserPageParam;
-import com.izumi.dto.UserParam;
-import com.izumi.entity.User;
-import com.izumi.service.UserService;
+import com.izumi.modules.sys.dto.UserPageParam;
+import com.izumi.modules.sys.dto.UserParam;
+import com.izumi.modules.sys.entity.User;
+import com.izumi.modules.sys.service.UserService;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
