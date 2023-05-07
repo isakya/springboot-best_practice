@@ -23,13 +23,18 @@ public class PageParam<T> {
     private Integer pageNum;
     @ApiModelProperty(value = "每页大小")
     private Integer pageSize;
-
+    @ApiModelProperty(value = "排序字段")
+    private String orderBy;
+    @ApiModelProperty(value = "是否查询总数")
+    private Boolean isCount;
+    // 列正则
+    final static String REG_EXP = "(^_([a-zA-Z0-9\\s]_?)*$)|(^[a-zA-Z\\.](_?[a-zA-Z0-9\\.\\s])*_?$)";
 
     /**
      * 构建mybatis-plus分页对象
      */
     public IPage buildMpPage() {
-        Page page = new Page(getPageNum(), getPageSize());
+        Page page = new Page(getPageNum(), getPageSize(), !Boolean.FALSE.equals(isCount));
         return page;
     }
 
@@ -138,6 +143,31 @@ public class PageParam<T> {
                         queryWrapper.in(column, CollectionUtil.toList(ninArr));
                     }
                     break;
+            }
+        }
+        // 构建排序
+        // id desc
+        // id asc
+        // id desc, code asc
+        if(StrUtil.isNotEmpty(orderBy)){
+            String arr [] = orderBy.split(",");
+            for(String s:arr) {
+                String orderByList [] = s.split("\\s+");
+                if (orderByList.length==1) {
+                    String column = StrUtil.toUnderlineCase(orderByList[0]);
+                    if (column.matches(REG_EXP)) {
+                        queryWrapper.orderByAsc(column);
+                    }
+                } else {
+                    String column = StrUtil.toUnderlineCase(orderByList[0]);
+                    if (column.matches(REG_EXP)) {
+                        if("desc".equalsIgnoreCase(orderByList[1])) {
+                            queryWrapper.orderByDesc(column);
+                        } else {
+                            queryWrapper.orderByAsc(column);
+                        }
+                    }
+                }
             }
         }
         return queryWrapper;
