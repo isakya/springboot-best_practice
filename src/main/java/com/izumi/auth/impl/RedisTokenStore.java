@@ -4,6 +4,7 @@ package com.izumi.auth.impl;
 import com.izumi.auth.ITokenStore;
 import com.izumi.modules.sys.vo.LoginVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,8 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
+// 读取yml文件中的属性然后判断是否有该值
+@ConditionalOnProperty(prefix = "auth", name = "tokenStoreType", havingValue = "redis")
 public class RedisTokenStore implements ITokenStore {
     private final RedisTemplate<String, LoginVO> redisTemplate;
     private final String PREFIX = "TOKEN_STORE:";
