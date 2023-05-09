@@ -69,4 +69,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         tokenStore.setToken(vo);
         return vo;
     }
+
+    @Override
+    public void logout(String token) {
+        tokenStore.removeToken(token);
+    }
 }

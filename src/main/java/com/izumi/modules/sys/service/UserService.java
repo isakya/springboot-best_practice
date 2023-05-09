@@ -35,4 +35,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     LoginVO login(LoginParam param);
+
+    /**
+     * 退出登录
+     * @param token
+     */
+    void logout(String token);
+
 }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,7 +25,20 @@ public class AuthController {
      */
     @PostMapping("/sys/login")
     @ApiOperation(value = "登录")
-    public CommonResult<LoginVO> save(@RequestBody @Validated() LoginParam param) {
+    public CommonResult<LoginVO> login(@RequestBody @Validated() LoginParam param) {
         return CommonResult.data(userService.login(param));
+    }
+
+    /**
+     * 登录
+     * @param authorization
+     * @return
+     */
+    @PostMapping("/sys/logout")
+    @ApiOperation(value = "退出登录")
+    public CommonResult<?> logout(@RequestHeader() String authorization) {
+        String token = authorization.replace("Bearer ", "");
+        userService.logout(token);
+        return CommonResult.ok();
     }
 }
