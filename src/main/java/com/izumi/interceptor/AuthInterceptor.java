@@ -21,7 +21,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
-        log.debug("AuthInterceptor-preHandle,url:" + uri);
+        log.debug("AuthInterceptor-preHandle,uri:" + uri);
         if("/sys/login".equalsIgnoreCase(uri)) {
             // 白名单
             return true;

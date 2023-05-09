@@ -6,7 +6,7 @@ import com.izumi.auth.ITokenStore;
 import com.izumi.modules.sys.vo.LoginVO;
 import org.springframework.stereotype.Component;
 
-@Component
+// @Component
 public class MemoryTokenStore implements ITokenStore {
     TimedCache<String, LoginVO> tokenTimedCache = CacheUtil.newTimedCache(1000*60*60*2);
     @Override
