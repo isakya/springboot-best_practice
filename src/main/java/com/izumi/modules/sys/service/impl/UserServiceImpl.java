@@ -15,6 +15,7 @@ import com.izumi.modules.sys.dto.LoginParam;
 import com.izumi.modules.sys.dto.UserPageParam;
 import com.izumi.modules.sys.dto.UserParam;
 import com.izumi.modules.sys.entity.User;
+import com.izumi.modules.sys.enums.UserTypeEnum;
 import com.izumi.modules.sys.mapper.UserMapper;
 import com.izumi.modules.sys.service.UserService;
 import com.izumi.modules.sys.vo.LoginVO;
@@ -68,6 +69,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LoginVO vo = new LoginVO();
         vo.setUserId(user.getId());
         vo.setToken(StrUtil.uuid());
+
+        vo.setUserType(UserTypeEnum.codeToEnum(user.getUserType()));
+
         // 权限分配
         if(Integer.valueOf(1).equals(user.getUserType())) {
             vo.setSuperAdmin(true);

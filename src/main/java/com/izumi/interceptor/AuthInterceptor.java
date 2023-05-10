@@ -3,6 +3,7 @@ package com.izumi.interceptor;
 import cn.hutool.core.util.StrUtil;
 import com.izumi.auth.ITokenStore;
 import com.izumi.exception.ServiceException;
+import com.izumi.modules.sys.enums.UserTypeEnum;
 import com.izumi.modules.sys.vo.LoginVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         // 第一步：获取当前用户所属用户类型枚举 == userTypeEnum
         // 1 => UserTypeEnum.ADMIN
         // 2 => UserTypeEnum.COMMON
-
+        UserTypeEnum userType = vo.getUserType();
+        System.err.println(userType);
         // 第二步：拿到请求方法中的注解@UserPerm({UserTypePerm.COMMON,UserTypePerm.ADMIN}) == userTypeEnumArr
 
         // 第三步：userTypeEnum in ==> userTypeEnumArr

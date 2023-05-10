@@ -1,6 +1,7 @@
 package com.izumi.modules.sys.vo;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.izumi.modules.sys.enums.UserTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class LoginVO {
     private List<String> perms;
     @ApiModelProperty(value = "是否是超级管理员")
     private boolean superAdmin;
-
+    private UserTypeEnum userType;
     /**
      * 是否有权限
      * @param perm
