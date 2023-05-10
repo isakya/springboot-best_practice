@@ -1,5 +1,6 @@
 package com.izumi.modules.sys.controller;
 
+import com.izumi.auth.UserPerm;
 import com.izumi.base.CommonPage;
 import com.izumi.base.CommonResult;
 import com.izumi.base.IdParam;
@@ -7,6 +8,7 @@ import com.izumi.base.IdsParam;
 import com.izumi.modules.sys.dto.UserPageParam;
 import com.izumi.modules.sys.dto.UserParam;
 import com.izumi.modules.sys.entity.User;
+import com.izumi.modules.sys.enums.UserTypePerm;
 import com.izumi.modules.sys.service.UserService;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
@@ -68,6 +70,7 @@ public class UserController {
      */
     @PostMapping("/user/getById")
     @ApiOperation(value = "查询单个用户")
+    @UserPerm(UserTypePerm.COMMON)
     public CommonResult<User> getById(@RequestBody IdParam param) {
         User User = userService.getById(param.getId());
         return CommonResult.data(User);
@@ -80,6 +83,7 @@ public class UserController {
      */
     @PostMapping("/user/page")
     @ApiOperation(value = "查询用户列表")
+    @UserPerm({UserTypePerm.COMMON,UserTypePerm.ADMIN})
     public CommonResult<CommonPage<User>> page(@RequestBody UserPageParam param) {
         return CommonResult.data(userService.page(param));
     }

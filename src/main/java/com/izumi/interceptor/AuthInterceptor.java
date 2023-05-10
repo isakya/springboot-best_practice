@@ -40,6 +40,16 @@ public class AuthInterceptor implements HandlerInterceptor {
         if(!vo.isSuperAdmin() && vo.hasPerm(perm)) {
             ServiceException.throwBiz(99990406, "您没有权限访问，请联系管理员");
         }
+
+        // 第一步：获取当前用户所属用户类型枚举 == userTypeEnum
+        // 1 => UserTypeEnum.ADMIN
+        // 2 => UserTypeEnum.COMMON
+
+        // 第二步：拿到请求方法中的注解@UserPerm({UserTypePerm.COMMON,UserTypePerm.ADMIN}) == userTypeEnumArr
+
+        // 第三步：userTypeEnum in ==> userTypeEnumArr
+
+        // 如果userTypeEnum在userTypeEnumArr里，则有权限，否则无权限
         return true;
     }
 
