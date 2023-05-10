@@ -6,6 +6,7 @@ import com.izumi.auth.AuthProperties;
 import com.izumi.auth.ITokenStore;
 import com.izumi.auth.UserPerm;
 import com.izumi.exception.ServiceException;
+import com.izumi.holder.LoginUserHolder;
 import com.izumi.modules.sys.enums.UserTypeEnum;
 import com.izumi.modules.sys.vo.LoginVO;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (vo == null) {
             ServiceException.throwBiz(99990403, "token不存在或已过期");
         }
+        // 当前线程绑定用户信息
+        LoginUserHolder.set(vo);
         // 处理权限标识
         // String perm = StrUtil.removePrefix(uri, "/").replaceAll("/", ":");
         // if(!vo.isSuperAdmin() && vo.hasPerm(perm)) {
@@ -83,5 +86,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         log.debug("AuthInterceptor-afterCompletion");
+        LoginUserHolder.remove();
     }
 }

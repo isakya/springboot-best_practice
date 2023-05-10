@@ -1,5 +1,7 @@
 package com.izumi.interceptor;
 
+import com.izumi.holder.LoginUserHolder;
+import com.izumi.modules.sys.vo.LoginVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -14,7 +16,8 @@ public class LogInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
-        log.debug("LogInterceptor-preHandle,url:" + uri);
+        Long userId = LoginUserHolder.getUserId();
+        log.debug("LogInterceptor-preHandle,uri:{},userId:{}",uri,userId);
         return true;
     }
 
