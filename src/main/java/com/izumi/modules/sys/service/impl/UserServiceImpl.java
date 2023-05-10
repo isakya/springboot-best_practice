@@ -73,16 +73,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         vo.setUserType(UserTypeEnum.codeToEnum(user.getUserType()));
 
         // 权限分配
-        if(Integer.valueOf(1).equals(user.getUserType())) {
-            vo.setSuperAdmin(true);
-            vo.setPerms(new ArrayList<>());
-        } else if(Integer.valueOf(2).equals(user.getUserType())){
-            vo.setSuperAdmin(false);
-            vo.setPerms(CollectionUtil.newArrayList("user:getById","role:page","role:getById"));
-        } else {
-            vo.setSuperAdmin(false);
-            vo.setPerms(new ArrayList<>());
-        }
+        // if(Integer.valueOf(1).equals(user.getUserType())) {
+        //     vo.setSuperAdmin(true);
+        //     vo.setPerms(new ArrayList<>());
+        // } else if(Integer.valueOf(2).equals(user.getUserType())){
+        //     vo.setSuperAdmin(false);
+        //     vo.setPerms(CollectionUtil.newArrayList("user:getById","role:page","role:getById"));
+        // } else {
+        //     vo.setSuperAdmin(false);
+        //     vo.setPerms(new ArrayList<>());
+        // }
         tokenStore.setToken(vo);
         return vo;
     }
