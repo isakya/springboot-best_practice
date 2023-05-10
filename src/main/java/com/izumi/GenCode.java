@@ -39,14 +39,19 @@ public class GenCode {
                             .enableBaseResultMap()
                             .enableBaseColumnList()
                             .fileOverride(); //可覆盖
+                    // service生成策略配置
+                    builder.serviceBuilder()
+                            .formatServiceFileName("%sService") // 文件命名规则
+                            .fileOverride(); // 可以覆盖
                 })
                 .templateConfig(builder -> {
                     // builder.disable(); // 禁止所有模板
                     // builder.disable(TemplateType.ENTITY); // 禁止生成ENTITY
                     // builder.disable(TemplateType.MAPPER); // 禁止生成MAPPER
-                    builder.disable(TemplateType.SERVICE); // 禁止生成SERVICE
-                    builder.disable(TemplateType.SERVICEIMPL); // 禁止生成SERVICEIMPL
+                    // builder.disable(TemplateType.SERVICE); // 禁止生成SERVICE
+                    // builder.disable(TemplateType.SERVICEIMPL); // 禁止生成SERVICEIMPL
                     // builder.disable(TemplateType.XML); // 禁止生成XML
+                    builder.disable(TemplateType.CONTROLLER);
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
