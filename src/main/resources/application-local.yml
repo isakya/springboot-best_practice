@@ -1,0 +1,3 @@
+auth:
+  tokenStoreType: ${AUTH_TOKEN_STORE_TYPE:redis} # token存储类型
+  expire: 3 # 过期时间（单位小时）
