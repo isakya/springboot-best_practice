@@ -1,5 +1,6 @@
 package com.izumi.interceptor;
 
+import cn.hutool.core.util.StrUtil;
 import com.izumi.holder.LoginUserHolder;
 import com.izumi.log.LogHolder;
 import com.izumi.log.LogParam;
@@ -19,10 +20,14 @@ public class LogInterceptor implements HandlerInterceptor {
         Long userId = LoginUserHolder.getUserId();
         String userName = LoginUserHolder.getUserName();
         LogParam logParam = new LogParam();
+        // 请求流水号-唯一,方便日志核查
+        logParam.setRequestNo(StrUtil.uuid());
         logParam.setUserId(userId);
         logParam.setUserName(userName);
         logParam.setUrl(uri);
         LogHolder.set(logParam);
+        // 请求头返回流水号
+        response.setHeader("request-no", logParam.getRequestNo());
         return true;
     }
 

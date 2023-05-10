@@ -32,6 +32,6 @@ public class LogHolder {
     public static void writeLog() {
         LogParam param = LOG_THEAD_LOCAL.get();
         if(param == null) return;
-        log.debug("userId:{},userName:{},url:{}",param.getUserId(),param.getUserName(),param.getUrl());
+        log.debug("request-no:{},userId:{},userName:{},url:{}",param.getRequestNo(),param.getUserId(),param.getUserName(),param.getUrl());
     }
 }
