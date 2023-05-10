@@ -2,6 +2,7 @@ package com.izumi.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.json.JSONUtil;
 import com.izumi.holder.LoginUserHolder;
 import com.izumi.log.LogHolder;
 import com.izumi.log.LogParam;
@@ -40,6 +41,8 @@ public class LogInterceptor implements HandlerInterceptor {
         if(request instanceof LogRequestWrapper) {
             logParam.setBody(((LogRequestWrapper)request).getBody());
         }
+        // 请求参数-url中的参数
+        logParam.setParams(JSONUtil.toJsonStr(ServletUtil.getParamMap(request)));
         LogHolder.set(logParam);
         // 请求头返回流水号
         response.setHeader("request-no", logParam.getRequestNo());
