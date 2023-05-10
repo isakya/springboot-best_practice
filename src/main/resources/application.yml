@@ -11,7 +11,7 @@ spring:
     host: ${REDIS_HOST:127.0.0.1}
     port: ${REDIS_PORT:6379}
   profiles: # 指定环境配置
-    active: local
+    active: @spring.active@
 server:
   port: 8080
 logging:
