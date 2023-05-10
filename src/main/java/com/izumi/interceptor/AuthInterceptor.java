@@ -2,6 +2,7 @@ package com.izumi.interceptor;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import com.izumi.auth.AuthProperties;
 import com.izumi.auth.ITokenStore;
 import com.izumi.auth.UserPerm;
 import com.izumi.exception.ServiceException;
@@ -22,12 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class AuthInterceptor implements HandlerInterceptor {
     private final ITokenStore tokenStore;
-
+    private final AuthProperties authProperties;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
         log.debug("AuthInterceptor-preHandle,uri:" + uri);
-        if ("/sys/login".equalsIgnoreCase(uri)) {
+        if (authProperties.getIgnoreUri().contains(uri)) {
             // 白名单
             return true;
         }
@@ -49,6 +50,9 @@ public class AuthInterceptor implements HandlerInterceptor {
         // 第一步：获取当前用户所属用户类型枚举 == userTypeEnum
         // 1 => UserTypeEnum.ADMIN
         // 2 => UserTypeEnum.COMMON
+        if(authProperties.getSkipAuthUri().contains(uri)) {
+            return true;
+        }
         UserTypeEnum userType = vo.getUserType();
         if (UserTypeEnum.ADMIN.equals(userType)) return true;
 

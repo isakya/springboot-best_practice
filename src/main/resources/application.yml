@@ -21,4 +21,10 @@ mybatis-plus:
 auth:
   tokenStoreType: redis # token存储类型
   expire: 2 # 过期时间（单位小时）
+  ignore-uri: # 不需要登录也能访问的uri
+    - /user/getById
+    - /user/page
+  skip-auth-uri: # 不需要访问权限的uri ==> 只需要登录就能访问
+    - /user/getById
+    - /user/page
 
