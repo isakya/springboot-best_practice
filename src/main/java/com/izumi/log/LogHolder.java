@@ -1,6 +1,10 @@
 package com.izumi.log;
 
+import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Map;
 
 @Slf4j
 public class LogHolder {
@@ -31,19 +35,21 @@ public class LogHolder {
         LOG_THEAD_LOCAL.remove();
     }
 
+    private static Map<String, ILogStore> logStoreMap = SpringUtil.getBeansOfType(ILogStore.class);
+
+    /**
+     * 日志输出
+     */
     public static void writeLog() {
         LogParam param = LOG_THEAD_LOCAL.get();
         if (param == null) return;
-        log.debug("request-no:{},userId:{},userName:{},url:{},ip:{},brower:{},time:{},params:{},resData:{}",
-                param.getRequestNo(),
-                param.getUserId(),
-                param.getUserName(),
-                param.getUrl(),
-                param.getIp(),
-                param.getBrower(),
-                param.getTime(),
-                param.getParams(),
-                param.getBody()
-        );
+        // json转为字符串
+        if(JSONUtil.isTypeJSON(param.getBody())) {
+            param.setBody(JSONUtil.toJsonStr(JSONUtil.parse(param.getBody())));
+        }
+        SpringUtil.getBeansOfType(ILogStore.class);
+        logStoreMap.forEach((key, logStore) -> {
+            logStore.save(param);
+        });
     }
 }
