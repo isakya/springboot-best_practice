@@ -1,5 +1,6 @@
 package com.izumi.modules.sys.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -22,6 +23,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,6 +68,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LoginVO vo = new LoginVO();
         vo.setUserId(user.getId());
         vo.setToken(StrUtil.uuid());
+        // 权限分配
+        if(Integer.valueOf(1).equals(user.getUserType())) {
+            vo.setSuperAdmin(true);
+            vo.setPerms(new ArrayList<>());
+        } else if(Integer.valueOf(2).equals(user.getUserType())){
+            vo.setSuperAdmin(false);
+            vo.setPerms(CollectionUtil.newArrayList("user:getById","role:page","role:getById"));
+        } else {
+            vo.setSuperAdmin(false);
+            vo.setPerms(new ArrayList<>());
+        }
         tokenStore.setToken(vo);
         return vo;
     }

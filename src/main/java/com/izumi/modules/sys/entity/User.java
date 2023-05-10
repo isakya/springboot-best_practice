@@ -18,4 +18,6 @@ public class User {
     private String userName;
     @ApiModelProperty("密码")
     private String password;
+    @ApiModelProperty("用户类型")
+    private Integer userType;
 }
