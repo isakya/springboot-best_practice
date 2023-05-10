@@ -1,5 +1,4 @@
 package ${package.Entity};
-// 自定义模板
 <#list table.importPackages as pkg>
 import ${pkg};
 </#list>
