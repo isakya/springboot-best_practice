@@ -34,13 +34,14 @@ public class LogHolder {
     public static void writeLog() {
         LogParam param = LOG_THEAD_LOCAL.get();
         if (param == null) return;
-        log.debug("request-no:{},userId:{},userName:{},url:{},ip:{},brower:{}",
+        log.debug("request-no:{},userId:{},userName:{},url:{},ip:{},brower:{},time:{}",
                 param.getRequestNo(),
                 param.getUserId(),
                 param.getUserName(),
                 param.getUrl(),
                 param.getIp(),
-                param.getBrower()
+                param.getBrower(),
+                param.getTime()
         );
     }
 }

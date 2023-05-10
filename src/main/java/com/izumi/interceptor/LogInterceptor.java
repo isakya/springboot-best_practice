@@ -11,6 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 @Component
 @Slf4j
@@ -32,6 +33,8 @@ public class LogInterceptor implements HandlerInterceptor {
         // 浏览器信息
         String ua = request.getHeader("User-Agent");
         logParam.setBrower(ua);
+        // 请求开始时间
+        logParam.setStartTime(new Date());
         LogHolder.set(logParam);
         // 请求头返回流水号
         response.setHeader("request-no", logParam.getRequestNo());
@@ -41,6 +44,10 @@ public class LogInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         try {
+            LogParam logParam = LogHolder.get();
+            logParam.setEndTime(new Date());
+            // 总体请求时长
+            logParam.setTime(logParam.getEndTime().getTime()-logParam.getStartTime().getTime());
             LogHolder.writeLog();
         } catch(Exception e) {
             log.error("异常", e);
