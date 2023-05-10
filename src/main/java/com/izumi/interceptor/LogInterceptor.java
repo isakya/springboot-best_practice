@@ -17,7 +17,8 @@ public class LogInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
         Long userId = LoginUserHolder.getUserId();
-        log.debug("LogInterceptor-preHandle,uri:{},userId:{}",uri,userId);
+        String userName = LoginUserHolder.getUserName();
+        log.debug("LogInterceptor-preHandle,uri:{},userId:{},userName:{}",uri,userId,userName);
         return true;
     }
 

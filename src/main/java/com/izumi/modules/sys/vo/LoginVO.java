@@ -13,6 +13,8 @@ import java.util.List;
 public class LoginVO {
     @ApiModelProperty(value = "用户ID")
     private Long userId;
+    @ApiModelProperty(value = "用户名")
+    private String userName;
     @ApiModelProperty(value = "访问凭证")
     private String token;
     @ApiModelProperty(value = "权限标识集合")

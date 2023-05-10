@@ -68,7 +68,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LoginVO vo = new LoginVO();
         vo.setUserId(user.getId());
         vo.setToken(StrUtil.uuid());
-
+        vo.setUserName(user.getUserName());
         vo.setUserType(UserTypeEnum.codeToEnum(user.getUserType()));
 
         // 权限分配
