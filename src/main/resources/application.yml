@@ -4,12 +4,12 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: defaultDataSource
-    url: jdbc:mysql://localhost:3306/app?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: root
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:app}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
   redis:
-    host: 127.0.0.1
-    port: 6379
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
 server:
   port: 8080
 logging:
@@ -19,12 +19,12 @@ mybatis-plus:
   mapper-locations: classpath*:com/izumi/**/mapping/*.xml
 
 auth:
-  tokenStoreType: redis # token存储类型
+  tokenStoreType: ${AUTH_TOKEN_STORE_TYPE:redis} # token存储类型
   expire: 2 # 过期时间（单位小时）
-  ignore-uri: # 不需要登录也能访问的uri
-    - /user/getById
-    - /user/page
-  skip-auth-uri: # 不需要访问权限的uri ==> 只需要登录就能访问
-    - /user/getById
-    - /user/page
+#  ignore-uri: # 不需要登录也能访问的uri
+#    - /user/getById
+#    - /user/page
+#  skip-auth-uri: # 不需要访问权限的uri ==> 只需要登录就能访问
+#    - /user/getById
+#    - /user/page
 

@@ -26,6 +26,6 @@ public class AuthProperties {
      */
     @PostConstruct
     public void initDefaultIgnoreUri() {
-        ignoreUri.add("sys/login");
+        ignoreUri.add("/sys/login");
     }
 }
