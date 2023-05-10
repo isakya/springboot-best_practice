@@ -1,6 +1,7 @@
 package com.izumi.interceptor;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.servlet.ServletUtil;
 import com.izumi.holder.LoginUserHolder;
 import com.izumi.log.LogHolder;
 import com.izumi.log.LogParam;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LogInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String uri = request.getRequestURI();
+        String url = request.getRequestURL().toString();
         Long userId = LoginUserHolder.getUserId();
         String userName = LoginUserHolder.getUserName();
         LogParam logParam = new LogParam();
@@ -24,7 +25,13 @@ public class LogInterceptor implements HandlerInterceptor {
         logParam.setRequestNo(StrUtil.uuid());
         logParam.setUserId(userId);
         logParam.setUserName(userName);
-        logParam.setUrl(uri);
+        logParam.setUrl(url);
+        // 客户端IP
+        String ip = ServletUtil.getClientIP(request);
+        logParam.setIp(ip);
+        // 浏览器信息
+        String ua = request.getHeader("User-Agent");
+        logParam.setBrower(ua);
         LogHolder.set(logParam);
         // 请求头返回流水号
         response.setHeader("request-no", logParam.getRequestNo());

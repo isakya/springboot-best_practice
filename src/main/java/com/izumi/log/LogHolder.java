@@ -8,6 +8,7 @@ public class LogHolder {
 
     /**
      * 设置当前请求日志信息
+     *
      * @param vo
      */
     public static void set(LogParam vo) {
@@ -16,6 +17,7 @@ public class LogHolder {
 
     /**
      * 获取当前请求日志信息
+     *
      * @return
      */
     public static LogParam get() {
@@ -31,7 +33,14 @@ public class LogHolder {
 
     public static void writeLog() {
         LogParam param = LOG_THEAD_LOCAL.get();
-        if(param == null) return;
-        log.debug("request-no:{},userId:{},userName:{},url:{}",param.getRequestNo(),param.getUserId(),param.getUserName(),param.getUrl());
+        if (param == null) return;
+        log.debug("request-no:{},userId:{},userName:{},url:{},ip:{},brower:{}",
+                param.getRequestNo(),
+                param.getUserId(),
+                param.getUserName(),
+                param.getUrl(),
+                param.getIp(),
+                param.getBrower()
+        );
     }
 }
