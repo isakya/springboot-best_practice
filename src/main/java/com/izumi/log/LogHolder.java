@@ -34,7 +34,7 @@ public class LogHolder {
     public static void writeLog() {
         LogParam param = LOG_THEAD_LOCAL.get();
         if (param == null) return;
-        log.debug("request-no:{},userId:{},userName:{},url:{},ip:{},brower:{},time:{},params:{}",
+        log.debug("request-no:{},userId:{},userName:{},url:{},ip:{},brower:{},time:{},params:{},resData:{}",
                 param.getRequestNo(),
                 param.getUserId(),
                 param.getUserName(),
@@ -42,7 +42,8 @@ public class LogHolder {
                 param.getIp(),
                 param.getBrower(),
                 param.getTime(),
-                param.getParams()
+                param.getParams(),
+                param.getBody()
         );
     }
 }
