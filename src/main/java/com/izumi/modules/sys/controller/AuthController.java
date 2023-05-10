@@ -1,9 +1,7 @@
 package com.izumi.modules.sys.controller;
 
-import com.izumi.auth.UserPerm;
 import com.izumi.base.CommonResult;
 import com.izumi.modules.sys.dto.LoginParam;
-import com.izumi.modules.sys.enums.UserTypeEnum;
 import com.izumi.modules.sys.service.UserService;
 import com.izumi.modules.sys.vo.LoginVO;
 import io.swagger.annotations.Api;

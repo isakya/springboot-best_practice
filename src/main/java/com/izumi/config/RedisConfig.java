@@ -33,6 +33,7 @@ public class RedisConfig {
             @Override
             public LoginVO deserialize(byte[] bytes) throws SerializationException {
                 String json = StrUtil.str(bytes, Charset.defaultCharset());
+                if(StrUtil.isEmpty(json)) return null;
                 return JSONUtil.toBean(json, LoginVO.class);
             }
         });

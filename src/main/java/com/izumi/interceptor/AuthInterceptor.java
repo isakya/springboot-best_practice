@@ -7,6 +7,8 @@ import com.izumi.auth.ITokenStore;
 import com.izumi.auth.UserPerm;
 import com.izumi.exception.ServiceException;
 import com.izumi.holder.LoginUserHolder;
+import com.izumi.modules.sys.enums.AuthErrEnum;
+import com.izumi.modules.sys.enums.SysErrEnum;
 import com.izumi.modules.sys.enums.UserTypeEnum;
 import com.izumi.modules.sys.vo.LoginVO;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +37,12 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
         String token = request.getHeader("Authorization");
         if (StrUtil.isEmpty(token)) {
-            ServiceException.throwBiz(99990403, "token不存在或已过期");
+            ServiceException.throwBiz(AuthErrEnum.TOKEN_EXPIRE);
         }
         token = token.replace("Bearer ", "");
         LoginVO vo = tokenStore.getToken(token);
         if (vo == null) {
-            ServiceException.throwBiz(99990403, "token不存在或已过期");
+            ServiceException.throwBiz(AuthErrEnum.TOKEN_EXPIRE);
         }
         // 当前线程绑定用户信息
         LoginUserHolder.set(vo);
@@ -68,11 +70,11 @@ public class AuthInterceptor implements HandlerInterceptor {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             UserPerm userPerm = handlerMethod.getMethodAnnotation(UserPerm.class);
             if (userPerm == null) {
-                ServiceException.throwBiz(99990406, "您没有权限访问，请联系管理员");
+                ServiceException.throwBiz(AuthErrEnum.NOT_AUTH);
             }
             UserTypeEnum[] userTypeEnumArr = userPerm.value();
             if(!ArrayUtil.contains(userTypeEnumArr, userType)) {
-                ServiceException.throwBiz(99990406, "您没有权限访问，请联系管理员");
+                ServiceException.throwBiz(AuthErrEnum.NOT_AUTH);
             }
         }
         return true;

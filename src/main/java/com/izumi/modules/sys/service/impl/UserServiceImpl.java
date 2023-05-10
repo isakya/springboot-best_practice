@@ -15,6 +15,7 @@ import com.izumi.modules.sys.dto.LoginParam;
 import com.izumi.modules.sys.dto.UserPageParam;
 import com.izumi.modules.sys.dto.UserParam;
 import com.izumi.modules.sys.entity.User;
+import com.izumi.modules.sys.enums.AuthErrEnum;
 import com.izumi.modules.sys.enums.UserTypeEnum;
 import com.izumi.modules.sys.mapper.UserMapper;
 import com.izumi.modules.sys.service.UserService;
@@ -63,7 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         wrapper.eq(User::getPassword, enPassword);
         User user = baseMapper.selectOne(wrapper);
         if(user == null) {
-            ServiceException.throwBiz(99999999, "用户名或密码错误");
+            ServiceException.throwBiz(AuthErrEnum.USERNAME_OR_PASSWORD_ERR);
         }
         LoginVO vo = new LoginVO();
         vo.setUserId(user.getId());

@@ -23,4 +23,12 @@ public class ServiceException extends RuntimeException {
     public static void throwBiz(int code, String message) {
         throw new ServiceException(code, message);
     }
+
+    /***
+     * 抛出自定义异常-错误码的方式
+     * @param commonError
+     */
+    public static void throwBiz(CommonError commonError) {
+        throw new ServiceException(commonError.getCode(), commonError.getMessage());
+    }
 }

@@ -28,4 +28,9 @@ public class AuthProperties {
     public void initDefaultIgnoreUri() {
         ignoreUri.add("/sys/login");
     }
+
+    @PostConstruct
+    public void initDefaultSkipAuthUri() {
+        skipAuthUri.add("/sys/logout");
+    }
 }

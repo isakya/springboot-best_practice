@@ -23,7 +23,9 @@ public class LogResponseBodyAdvice implements ResponseBodyAdvice {
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         if(o != null && o instanceof CommonResult) {
             LogParam logParam = LogHolder.get();
-            logParam.setResData(JSONUtil.toJsonStr(o));
+            if(logParam != null) {
+                logParam.setResData(JSONUtil.toJsonStr(o));
+            }
         }
         return o;
     }
