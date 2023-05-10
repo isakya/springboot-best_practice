@@ -35,6 +35,11 @@ public class AuthInterceptor implements HandlerInterceptor {
         if(vo == null) {
             ServiceException.throwBiz(99990403, "token不存在或已过期");
         }
+        // 处理权限标识
+        String perm = StrUtil.removePrefix(uri, "/").replaceAll("/", ":");
+        if(!vo.isSuperAdmin() && vo.hasPerm(perm)) {
+            ServiceException.throwBiz(99990406, "您没有权限访问，请联系管理员");
+        }
         return true;
     }
 

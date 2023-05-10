@@ -1,5 +1,6 @@
 package com.izumi.modules.sys.vo;
 
+import cn.hutool.core.collection.CollectionUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,4 +18,13 @@ public class LoginVO {
     private List<String> perms;
     @ApiModelProperty(value = "是否是超级管理员")
     private boolean superAdmin;
+
+    /**
+     * 是否有权限
+     * @param perm
+     * @return
+     */
+    public boolean hasPerm(String perm) {
+        return CollectionUtil.isNotEmpty(perms) && perms.contains(perm);
+    }
 }
