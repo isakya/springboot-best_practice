@@ -5,6 +5,7 @@ import cn.hutool.extra.servlet.ServletUtil;
 import com.izumi.holder.LoginUserHolder;
 import com.izumi.log.LogHolder;
 import com.izumi.log.LogParam;
+import com.izumi.log.LogRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -35,6 +36,10 @@ public class LogInterceptor implements HandlerInterceptor {
         logParam.setBrower(ua);
         // 请求开始时间
         logParam.setStartTime(new Date());
+        // 获取请求正文
+        if(request instanceof LogRequestWrapper) {
+            logParam.setBody(((LogRequestWrapper)request).getBody());
+        }
         LogHolder.set(logParam);
         // 请求头返回流水号
         response.setHeader("request-no", logParam.getRequestNo());
