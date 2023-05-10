@@ -1,10 +1,12 @@
 package com.izumi.modules.sys.enums;
 
 import com.izumi.exception.CommonError;
+import com.izumi.exception.ErrEnum;
 
 /**
  * 权限模块错误码
  */
+@ErrEnum(name="auth",value="权限错误码",bizCode=1000,min=0,max=100)
 public enum AuthErrEnum implements CommonError {
     USERNAME_OR_PASSWORD_ERR(10000001, "用户名或密码错误"),
     TOKEN_EXPIRE(10000002, "token不存在或已过期"),
