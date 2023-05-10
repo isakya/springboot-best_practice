@@ -21,8 +21,9 @@ public class GenCode {
                 })
                 .packageConfig(builder -> {
                     builder.parent("com.izumi.modules") // 设置父包名
-                            .moduleName("sys") // 设置父包模块名
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, "H://code")); // 设置mapperXml生成路径
+                            .xml("mapper.mapping")
+                            .moduleName("sys"); // 设置父包模块名
+                            // .pathInfo(Collections.singletonMap(OutputFile.xml, "H://code")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude("sys_role") // 设置需要生成的表名
@@ -32,14 +33,20 @@ public class GenCode {
                             .enableLombok() // 启用lombok
                             .idType(IdType.ASSIGN_ID) // 配置主键策略
                             .fileOverride(); // 实体类模板可覆盖
+                    // mapper生成策略配置
+                    builder.mapperBuilder()
+                            .enableMapperAnnotation() // 启用@Mapper注解
+                            .enableBaseResultMap()
+                            .enableBaseColumnList()
+                            .fileOverride(); //可覆盖
                 })
                 .templateConfig(builder -> {
                     // builder.disable(); // 禁止所有模板
                     // builder.disable(TemplateType.ENTITY); // 禁止生成ENTITY
-                    builder.disable(TemplateType.MAPPER); // 禁止生成MAPPER
+                    // builder.disable(TemplateType.MAPPER); // 禁止生成MAPPER
                     builder.disable(TemplateType.SERVICE); // 禁止生成SERVICE
                     builder.disable(TemplateType.SERVICEIMPL); // 禁止生成SERVICEIMPL
-                    builder.disable(TemplateType.XML); // 禁止生成XML
+                    // builder.disable(TemplateType.XML); // 禁止生成XML
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
