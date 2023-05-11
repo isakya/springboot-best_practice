@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.izumi.gen.EnhanceFreemarkerTemplateEngine;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GenCode {
     public static void main(String[] args) {
@@ -22,6 +25,7 @@ public class GenCode {
                 .packageConfig(builder -> {
                     builder.parent("com.izumi.modules") // 设置父包名
                             .xml("mapper.mapping")
+                            .other("dto") // 设置dto包名
                             .moduleName("sys"); // 设置父包模块名
                             // .pathInfo(Collections.singletonMap(OutputFile.xml, "H://code")); // 设置mapperXml生成路径
                 })
@@ -53,7 +57,15 @@ public class GenCode {
                     // builder.disable(TemplateType.XML); // 禁止生成XML
                     builder.disable(TemplateType.CONTROLLER);
                 })
-                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
+                .templateEngine(new EnhanceFreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
+                .injectionConfig(consumer -> {
+                    Map<String, String> customFile = new HashMap<>();
+                    // DTO
+                    customFile.put("Param.java", "/templates/param.java.ftl");
+                    customFile.put("PageParam.java", "/templates/pageParam.java.ftl");
+                    consumer.fileOverride(); // 可以覆盖
+                    consumer.customFile(customFile);
+                })
                 .execute();
     }
 }
