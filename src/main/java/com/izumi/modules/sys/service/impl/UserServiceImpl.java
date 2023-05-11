@@ -17,6 +17,7 @@ import com.izumi.modules.sys.dto.UserParam;
 import com.izumi.modules.sys.entity.User;
 import com.izumi.modules.sys.enums.AuthErrEnum;
 import com.izumi.modules.sys.enums.UserAdminTypeEnum;
+import com.izumi.modules.sys.mapper.MenuMapper;
 import com.izumi.modules.sys.mapper.UserMapper;
 import com.izumi.modules.sys.service.UserService;
 import com.izumi.modules.sys.vo.LoginVO;
@@ -32,6 +33,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     private final ITokenStore tokenStore;
+    private final MenuMapper menuMapper;
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(UserParam param) {
@@ -72,7 +74,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         vo.setToken(StrUtil.uuid());
         vo.setUserName(user.getUserName());
         vo.setAdminType(UserAdminTypeEnum.ADMIN.codeToEnum(user.getAdminType()));
-        vo.setPerms(CollectionUtil.newArrayList("sys:user:page", "sys:post:page"));
+        vo.setPerms(menuMapper.selectMenuCodeByUserId(user.getId()));
         // 权限分配
         // if(Integer.valueOf(1).equals(user.getUserType())) {
         //     vo.setSuperAdmin(true);

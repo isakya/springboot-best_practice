@@ -5,4 +5,15 @@
     <select id="selectCustom" resultType="com.izumi.modules.sys.vo.MenuVO">
         select * from sys_menu t ${ew.customSqlSegment}
     </select>
+    <!--查询某个用户拥有的权限标识-->
+    <select id="selectMenuCodeByUserId" resultType="java.lang.String">
+        SELECT DISTINCT
+            ( m.CODE )
+        FROM
+            sys_menu m
+                LEFT JOIN sys_role_menu rm ON rm.menu_id = m.id
+                LEFT JOIN sys_user_role ur ON rm.role_id = ur.role_id
+        WHERE
+            ur.user_id = #{userId}
+    </select>
 </mapper>

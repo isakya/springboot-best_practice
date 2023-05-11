@@ -22,4 +22,11 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MenuMapper extends BaseMapper<Menu> {
     List<MenuVO> selectCustom(IPage<MenuVO>page, @Param(Constants.WRAPPER) Wrapper<Menu>wrapper);
+
+    /**
+     * 查询某个用户拥有的权限标识
+     * @param userId
+     * @return
+     */
+    List<String> selectMenuCodeByUserId(@Param("userId") Long userId);
 }
