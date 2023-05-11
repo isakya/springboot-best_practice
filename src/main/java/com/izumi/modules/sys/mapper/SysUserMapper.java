@@ -1,6 +1,6 @@
 package com.izumi.modules.sys.mapper;
 
-import com.izumi.modules.sys.entity.User;
+import com.izumi.modules.sys.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -19,6 +19,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023-05-11
  */
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
-    List<User> selectCustom(IPage<User>page, @Param(Constants.WRAPPER) Wrapper<User>wrapper);
+public interface SysUserMapper extends BaseMapper<SysUser> {
+    List<SysUser> selectCustom(IPage<SysUser>page, @Param(Constants.WRAPPER) Wrapper<SysUser>wrapper);
 }

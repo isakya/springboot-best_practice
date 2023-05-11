@@ -1,13 +1,14 @@
 package ${package.ServiceImpl};
+<#if !r>
 import ${g.basePackage}.base.CommonPage;
 import ${package.Other}.${entity}PageParam;
 import ${package.Other}.${entity}Param;
-import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.BeanUtils;
 import java.util.List;
-
+import org.springframework.transaction.annotation.Transactional;
+</#if>
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
@@ -29,6 +30,7 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 }
 <#else>
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+    <#if !r>
     @Override
     @Transactional(rollbackFor = Exception.class) // 表示所有的异常都要回滚
     public boolean save(${entity}Param param) {
@@ -52,5 +54,6 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         page.setRecords(list);
         return CommonPage.toPage(page);
     }
+    </#if>
 }
 </#if>

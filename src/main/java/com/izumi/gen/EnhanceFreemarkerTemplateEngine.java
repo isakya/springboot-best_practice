@@ -26,10 +26,19 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
                 objectMap.put("hasOtherDate", true);
             }
         });
+        // 是否为中间表
+        final boolean r = StrUtil.isNotEmpty(tableInfo.getComment()) && tableInfo.getComment().startsWith("r_");
+        objectMap.put("r", r);
         customFile.forEach((key, value) -> {
             String fileName = String.format(otherPath + File.separator + entityName + "%s", key);
             boolean isFileOverride = Convert.toBool(objectMap.get(key+"FileOverride"),false);
-            this.outputFile(new File(fileName), objectMap, value, isFileOverride);
+            if(r) {
+                if(!"PageParam.java".equalsIgnoreCase(key)) {
+                    this.outputFile(new File(fileName), objectMap, value, isFileOverride);
+                }
+            } else {
+                this.outputFile(new File(fileName), objectMap, value, isFileOverride);
+            }
         });
     }
 

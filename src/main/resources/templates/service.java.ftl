@@ -1,7 +1,9 @@
 package ${package.Service};
+<#if !r>
 import ${g.basePackage}.base.CommonPage;
 import ${package.Other}.${entity}PageParam;
 import ${package.Other}.${entity}Param;
+</#if>
 import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 
@@ -17,6 +19,7 @@ import ${superServiceClassPackage};
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 <#else>
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+    <#if !r>
      /**
      * 添加${table.comment!}
      * @param param
@@ -36,5 +39,6 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      */
      CommonPage<${entity}> page(${entity}PageParam param);
+    </#if>
 }
 </#if>

@@ -1,6 +1,6 @@
 package com.izumi.modules.sys.mapper;
 
-import com.izumi.modules.sys.entity.User;
+import com.izumi.modules.sys.entity.SysMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -12,13 +12,13 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
- * 用户 Mapper 接口
+ * 菜单 Mapper 接口
  * </p>
  *
  * @author izumi
  * @since 2023-05-11
  */
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
-    List<User> selectCustom(IPage<User>page, @Param(Constants.WRAPPER) Wrapper<User>wrapper);
+public interface SysMenuMapper extends BaseMapper<SysMenu> {
+    List<SysMenu> selectCustom(IPage<SysMenu>page, @Param(Constants.WRAPPER) Wrapper<SysMenu>wrapper);
 }
