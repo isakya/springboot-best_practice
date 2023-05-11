@@ -1,0 +1,20 @@
+# 数据库配置
+db.url=jdbc:mysql://127.0.0.1:3306/app?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+db.username=root
+db.password=root
+
+# 作者
+author=izumi
+# 包名配置
+packageParent=com.izumi.modules
+# 基础包
+basePackage=com.izumi
+# 模块名
+moduleName=sys
+# 表名称
+# 1.模糊查询以%结尾；
+# 2.多张时使用英文逗号分割
+# tableName=cms_demo,cms_test
+tableName=sys_role
+# 表前辍
+tablePrefix=sys_

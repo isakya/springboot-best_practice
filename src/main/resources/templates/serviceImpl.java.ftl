@@ -1,7 +1,7 @@
 package ${package.ServiceImpl};
-import com.izumi.base.CommonPage;
-import com.izumi.modules.sys.dto.RolePageParam;
-import com.izumi.modules.sys.dto.RoleParam;
+import ${g.basePackage}.base.CommonPage;
+import ${package.Other}.${entity}PageParam;
+import ${package.Other}.${entity}Param;
 import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

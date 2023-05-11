@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
     </#if>
 </#if>
 import javax.validation.constraints.*;
-import com.izumi.validation.Groups;
+import ${g.basePackage}.validation.Groups;
 /**
  * <p>
  * ${table.comment!}

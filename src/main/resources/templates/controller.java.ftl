@@ -1,14 +1,14 @@
 package ${package.Controller};
 
-import com.izumi.base.CommonPage;
-import com.izumi.base.CommonResult;
-import com.izumi.base.IdParam;
-import com.izumi.base.IdsParam;
+import ${g.basePackage}.base.CommonPage;
+import ${g.basePackage}.base.CommonResult;
+import ${g.basePackage}.base.IdParam;
+import ${g.basePackage}.base.IdsParam;
 import ${package.Other}.${entity}PageParam;
 import ${package.Other}.${entity}Param;
 import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};;
-import com.izumi.validation.Groups;
+import ${g.basePackage}.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

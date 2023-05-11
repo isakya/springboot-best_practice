@@ -1,7 +1,7 @@
 package ${package.Service};
-import com.izumi.base.CommonPage;
-import com.izumi.modules.sys.dto.RolePageParam;
-import com.izumi.modules.sys.dto.RoleParam;
+import ${g.basePackage}.base.CommonPage;
+import ${package.Other}.${entity}PageParam;
+import ${package.Other}.${entity}Param;
 import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 

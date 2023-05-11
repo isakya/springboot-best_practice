@@ -1,6 +1,6 @@
 package ${package.Other};
 
-import com.izumi.base.PageParam;
+import ${g.basePackage}.base.PageParam;
 import ${package.Entity}.${entity};
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

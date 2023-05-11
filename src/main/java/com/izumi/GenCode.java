@@ -1,11 +1,14 @@
 package com.izumi;
+import cn.hutool.setting.Setting;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.TemplateType;
+import com.baomidou.mybatisplus.generator.config.po.LikeTable;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.izumi.gen.EnhanceFreemarkerTemplateEngine;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,24 +17,35 @@ public class GenCode {
     public static void main(String[] args) {
         // System.err.println(System.getProperty("user.dir")); // 项目根目录
         String projectRootDir = System.getProperty("user.dir");
-        FastAutoGenerator.create("jdbc:mysql://127.0.0.1:3306/app?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true", "root", "root")
+        Setting setting = new Setting("gencode.setting");
+        String dbUrl = setting.get("db.url");
+        String dbUsername = setting.get("db.username");
+        String dbPassword = setting.get("db.password");
+        FastAutoGenerator.create(dbUrl, dbUsername, dbPassword)
                 .globalConfig(builder -> {
-                    builder.author("izumi") // 设置作者
+                    builder.author(setting.get("author")) // 设置作者
                             .enableSwagger() // 开启 swagger 模式
                             .fileOverride() // 覆盖已生成文件 3.5.2时已弃用
                             .disableOpenDir() // 禁止打开目录
                             .outputDir(projectRootDir + "/src/main/java"); // 指定输出目录
                 })
                 .packageConfig(builder -> {
-                    builder.parent("com.izumi.modules") // 设置父包名
+                    builder.parent(setting.get("packageParent")) // 设置父包名
                             .xml("mapper.mapping")
                             .other("dto") // 设置dto包名
-                            .moduleName("sys"); // 设置父包模块名
+                            .moduleName(setting.get("moduleName")); // 设置父包模块名
                             // .pathInfo(Collections.singletonMap(OutputFile.xml, "H://code")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("sys_role") // 设置需要生成的表名
-                            .addTablePrefix("sys_"); // 设置过滤表前缀
+                    String tableName = setting.get("tableName");
+                    if(tableName.endsWith("%")) {
+                        builder.likeTable(new LikeTable(tableName)); // 模糊查询
+                    } else {
+                        Arrays.stream(tableName.split(",")).forEach(item->{
+                            builder.addInclude(item); // 设置需要生成的表名
+                        });
+                    }
+                    builder.addTablePrefix(setting.get("tablePrefix")); // 设置过滤表前缀
                     // 实体类生成策略
                     builder.entityBuilder()
                             .enableLombok() // 启用lombok
@@ -67,6 +81,9 @@ public class GenCode {
                     customFile.put("Param.java", "/templates/param.java.ftl");
                     customFile.put("PageParam.java", "/templates/pageParam.java.ftl");
                     consumer.fileOverride(); // 可以覆盖
+                    Map<String,Object> customMap = new HashMap<>();
+                    customMap.put("g",setting);
+                    consumer.customMap(customMap);
                     consumer.customFile(customFile);
                 })
                 .execute();
