@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 
 /**
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "岗位管理")
 @RequiredArgsConstructor
+@RequestMapping("/sys")
 public class PostController {
     private final PostService postService;
 
@@ -38,7 +41,7 @@ public class PostController {
      * @param param
      * @return
      */
-    @PostMapping("/sys/post/save")
+    @PostMapping("/post/save")
     @ApiOperation(value = "添加岗位")
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) PostParam param) {
         postService.save(param);

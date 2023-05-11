@@ -1,6 +1,5 @@
 package com.izumi.modules.sys.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -16,7 +15,7 @@ import com.izumi.modules.sys.dto.UserPageParam;
 import com.izumi.modules.sys.dto.UserParam;
 import com.izumi.modules.sys.entity.User;
 import com.izumi.modules.sys.enums.AuthErrEnum;
-import com.izumi.modules.sys.enums.UserTypeEnum;
+import com.izumi.modules.sys.enums.UserAdminTypeEnum;
 import com.izumi.modules.sys.mapper.UserMapper;
 import com.izumi.modules.sys.service.UserService;
 import com.izumi.modules.sys.vo.LoginVO;
@@ -71,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         vo.setUserId(user.getId());
         vo.setToken(StrUtil.uuid());
         vo.setUserName(user.getUserName());
-        // vo.setUserType(UserTypeEnum.codeToEnum(user.getUserType()));
+        vo.setAdminType(UserAdminTypeEnum.ADMIN.codeToEnum(user.getAdminType()));
 
         // 权限分配
         // if(Integer.valueOf(1).equals(user.getUserType())) {

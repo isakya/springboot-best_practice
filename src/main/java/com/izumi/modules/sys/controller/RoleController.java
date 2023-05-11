@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 
 /**
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "角色管理")
 @RequiredArgsConstructor
+@RequestMapping("/sys")
 public class RoleController {
     private final RoleService roleService;
 
@@ -38,7 +41,7 @@ public class RoleController {
      * @param param
      * @return
      */
-    @PostMapping("/sys/role/save")
+    @PostMapping("/role/save")
     @ApiOperation(value = "添加角色")
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) RoleParam param) {
         roleService.save(param);

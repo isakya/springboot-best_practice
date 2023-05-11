@@ -8,8 +8,7 @@ import com.izumi.auth.UserPerm;
 import com.izumi.exception.ServiceException;
 import com.izumi.holder.LoginUserHolder;
 import com.izumi.modules.sys.enums.AuthErrEnum;
-import com.izumi.modules.sys.enums.SysErrEnum;
-import com.izumi.modules.sys.enums.UserTypeEnum;
+import com.izumi.modules.sys.enums.UserAdminTypeEnum;
 import com.izumi.modules.sys.vo.LoginVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,8 +57,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         if(authProperties.getSkipAuthUri().contains(uri)) {
             return true;
         }
-        UserTypeEnum userType = vo.getUserType();
-        if (UserTypeEnum.ADMIN.equals(userType)) return true;
+        UserAdminTypeEnum userType = vo.getAdminType();
+        if (UserAdminTypeEnum.ADMIN.equals(userType)) return true;
 
         // 第二步：拿到请求方法中的注解@UserPerm({UserTypePerm.COMMON,UserTypePerm.ADMIN}) == userTypeEnumArr
 
@@ -72,7 +71,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             if (userPerm == null) {
                 ServiceException.throwBiz(AuthErrEnum.NOT_AUTH);
             }
-            UserTypeEnum[] userTypeEnumArr = userPerm.value();
+            UserAdminTypeEnum[] userTypeEnumArr = userPerm.value();
             if(!ArrayUtil.contains(userTypeEnumArr, userType)) {
                 ServiceException.throwBiz(AuthErrEnum.NOT_AUTH);
             }

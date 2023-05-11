@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 
 /**
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "菜单管理")
 @RequiredArgsConstructor
+@RequestMapping("/sys")
 public class MenuController {
     private final MenuService menuService;
 
@@ -38,7 +41,7 @@ public class MenuController {
      * @param param
      * @return
      */
-    @PostMapping("/sys/menu/save")
+    @PostMapping("/menu/save")
     @ApiOperation(value = "添加菜单")
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) MenuParam param) {
         menuService.save(param);

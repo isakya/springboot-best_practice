@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 
 /**
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "${table.comment!}管理")
 @RequiredArgsConstructor
+@RequestMapping("/${package.ModuleName}")
 public class ${entity}Controller {
     private final ${entity}Service ${table.entityPath}Service;
 
@@ -38,7 +41,7 @@ public class ${entity}Controller {
      * @param param
      * @return
      */
-    @PostMapping("/${package.ModuleName}/${table.entityPath}/save")
+    @PostMapping("/${table.entityPath}/save")
     @ApiOperation(value = "添加${table.comment!}")
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) ${entity}Param param) {
         ${table.entityPath}Service.save(param);

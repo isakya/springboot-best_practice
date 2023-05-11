@@ -5,12 +5,12 @@ import java.util.Arrays;
 /**
  * 用户类型的枚举
  */
-public enum UserTypeEnum {
+public enum UserAdminTypeEnum {
     ADMIN(1,"超级管理员"),
     COMMON(2,"普通用户");
     private Integer code;
     private String message;
-    UserTypeEnum(Integer code, String message) {
+    UserAdminTypeEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -20,10 +20,10 @@ public enum UserTypeEnum {
      * @param code
      * @return
      */
-    public static UserTypeEnum codeToEnum(Integer code) {
-        return Arrays.stream(UserTypeEnum.values()).filter(item -> {
+    public static UserAdminTypeEnum codeToEnum(Integer code) {
+        return Arrays.stream(UserAdminTypeEnum.values()).filter(item -> {
             return item.code.equals(code);
-        }).findFirst().orElse(UserTypeEnum.COMMON);
+        }).findFirst().orElse(UserAdminTypeEnum.COMMON);
     }
     public Integer getCode() {
         return this.code;

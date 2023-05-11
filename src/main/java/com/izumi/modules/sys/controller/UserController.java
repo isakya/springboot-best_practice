@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "用户管理")
 @RequiredArgsConstructor
+@RequestMapping("/sys")
 public class UserController {
     private final UserService userService;
 
@@ -38,7 +40,7 @@ public class UserController {
      * @param param
      * @return
      */
-    @PostMapping("/sys/user/save")
+    @PostMapping("/user/save")
     @ApiOperation(value = "添加用户")
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) UserParam param) {
         userService.save(param);
