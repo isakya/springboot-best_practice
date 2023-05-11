@@ -1,5 +1,6 @@
 package com.izumi.modules.sys.controller;
 
+import com.izumi.auth.Perm;
 import com.izumi.base.CommonPage;
 import com.izumi.base.CommonResult;
 import com.izumi.base.IdParam;
@@ -43,6 +44,7 @@ public class PostController {
      */
     @PostMapping("/post/save")
     @ApiOperation(value = "添加岗位")
+    @Perm
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) PostParam param) {
         postService.save(param);
         return CommonResult.ok();
@@ -55,6 +57,7 @@ public class PostController {
      */
     @PostMapping("/post/remove")
     @ApiOperation(value = "删除岗位")
+    @Perm
     public CommonResult<?> remove(@RequestBody IdsParam param) {
         postService.removeBatchByIds(param.getIds());
         return CommonResult.ok();
@@ -67,6 +70,7 @@ public class PostController {
      */
     @PostMapping("/post/update")
     @ApiOperation(value = "修改岗位")
+    @Perm
     public CommonResult<?> update(@RequestBody @Validated({Groups.Update.class}) PostParam param) {
         postService.update(param);
         return CommonResult.ok();
@@ -79,6 +83,7 @@ public class PostController {
      */
     @PostMapping("/post/getById")
     @ApiOperation(value = "查询单个岗位")
+    @Perm
     public CommonResult<Post> getById(@RequestBody IdParam param) {
         Post post = postService.getById(param.getId());
         return CommonResult.data(post);
@@ -91,6 +96,7 @@ public class PostController {
      */
     @PostMapping("/post/page")
     @ApiOperation(value = "查询岗位列表")
+    @Perm
     public CommonResult<CommonPage<PostVO>> page(@RequestBody PostPageParam param) {
         return CommonResult.data(postService.page(param));
     }

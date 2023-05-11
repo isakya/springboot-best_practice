@@ -1,5 +1,6 @@
 package com.izumi.modules.sys.controller;
 
+import com.izumi.auth.Perm;
 import com.izumi.base.CommonPage;
 import com.izumi.base.CommonResult;
 import com.izumi.base.IdParam;
@@ -43,6 +44,7 @@ public class RoleController {
      */
     @PostMapping("/role/save")
     @ApiOperation(value = "添加角色")
+    @Perm
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) RoleParam param) {
         roleService.save(param);
         return CommonResult.ok();
@@ -55,6 +57,7 @@ public class RoleController {
      */
     @PostMapping("/role/remove")
     @ApiOperation(value = "删除角色")
+    @Perm
     public CommonResult<?> remove(@RequestBody IdsParam param) {
         roleService.removeBatchByIds(param.getIds());
         return CommonResult.ok();
@@ -67,6 +70,7 @@ public class RoleController {
      */
     @PostMapping("/role/update")
     @ApiOperation(value = "修改角色")
+    @Perm
     public CommonResult<?> update(@RequestBody @Validated({Groups.Update.class}) RoleParam param) {
         roleService.update(param);
         return CommonResult.ok();
@@ -79,6 +83,7 @@ public class RoleController {
      */
     @PostMapping("/role/getById")
     @ApiOperation(value = "查询单个角色")
+    @Perm
     public CommonResult<Role> getById(@RequestBody IdParam param) {
         Role role = roleService.getById(param.getId());
         return CommonResult.data(role);
@@ -91,6 +96,7 @@ public class RoleController {
      */
     @PostMapping("/role/page")
     @ApiOperation(value = "查询角色列表")
+    @Perm
     public CommonResult<CommonPage<RoleVO>> page(@RequestBody RolePageParam param) {
         return CommonResult.data(roleService.page(param));
     }

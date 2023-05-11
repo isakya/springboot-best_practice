@@ -1,5 +1,6 @@
 package ${package.Controller};
 
+import ${g.basePackage}.auth.Perm;
 import ${g.basePackage}.base.CommonPage;
 import ${g.basePackage}.base.CommonResult;
 import ${g.basePackage}.base.IdParam;
@@ -43,6 +44,7 @@ public class ${entity}Controller {
      */
     @PostMapping("/${table.entityPath}/save")
     @ApiOperation(value = "添加${table.comment!}")
+    @Perm
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) ${entity}Param param) {
         ${table.entityPath}Service.save(param);
         return CommonResult.ok();
@@ -55,6 +57,7 @@ public class ${entity}Controller {
      */
     @PostMapping("/${table.entityPath}/remove")
     @ApiOperation(value = "删除${table.comment!}")
+    @Perm
     public CommonResult<?> remove(@RequestBody IdsParam param) {
         ${table.entityPath}Service.removeBatchByIds(param.getIds());
         return CommonResult.ok();
@@ -67,6 +70,7 @@ public class ${entity}Controller {
      */
     @PostMapping("/${table.entityPath}/update")
     @ApiOperation(value = "修改${table.comment!}")
+    @Perm
     public CommonResult<?> update(@RequestBody @Validated({Groups.Update.class}) ${entity}Param param) {
         ${table.entityPath}Service.update(param);
         return CommonResult.ok();
@@ -79,6 +83,7 @@ public class ${entity}Controller {
      */
     @PostMapping("/${table.entityPath}/getById")
     @ApiOperation(value = "查询单个${table.comment!}")
+    @Perm
     public CommonResult<${entity}> getById(@RequestBody IdParam param) {
         ${entity} ${table.entityPath} = ${table.entityPath}Service.getById(param.getId());
         return CommonResult.data(${table.entityPath});
@@ -91,6 +96,7 @@ public class ${entity}Controller {
      */
     @PostMapping("/${table.entityPath}/page")
     @ApiOperation(value = "查询${table.comment!}列表")
+    @Perm
     public CommonResult<CommonPage<${entity}VO>> page(@RequestBody ${entity}PageParam param) {
         return CommonResult.data(${table.entityPath}Service.page(param));
     }

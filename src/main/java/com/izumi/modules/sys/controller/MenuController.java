@@ -1,5 +1,6 @@
 package com.izumi.modules.sys.controller;
 
+import com.izumi.auth.Perm;
 import com.izumi.base.CommonPage;
 import com.izumi.base.CommonResult;
 import com.izumi.base.IdParam;
@@ -43,6 +44,7 @@ public class MenuController {
      */
     @PostMapping("/menu/save")
     @ApiOperation(value = "添加菜单")
+    @Perm
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) MenuParam param) {
         menuService.save(param);
         return CommonResult.ok();
@@ -55,6 +57,7 @@ public class MenuController {
      */
     @PostMapping("/menu/remove")
     @ApiOperation(value = "删除菜单")
+    @Perm
     public CommonResult<?> remove(@RequestBody IdsParam param) {
         menuService.removeBatchByIds(param.getIds());
         return CommonResult.ok();
@@ -67,6 +70,7 @@ public class MenuController {
      */
     @PostMapping("/menu/update")
     @ApiOperation(value = "修改菜单")
+    @Perm
     public CommonResult<?> update(@RequestBody @Validated({Groups.Update.class}) MenuParam param) {
         menuService.update(param);
         return CommonResult.ok();
@@ -79,6 +83,7 @@ public class MenuController {
      */
     @PostMapping("/menu/getById")
     @ApiOperation(value = "查询单个菜单")
+    @Perm
     public CommonResult<Menu> getById(@RequestBody IdParam param) {
         Menu menu = menuService.getById(param.getId());
         return CommonResult.data(menu);
@@ -91,6 +96,7 @@ public class MenuController {
      */
     @PostMapping("/menu/page")
     @ApiOperation(value = "查询菜单列表")
+    @Perm
     public CommonResult<CommonPage<MenuVO>> page(@RequestBody MenuPageParam param) {
         return CommonResult.data(menuService.page(param));
     }
