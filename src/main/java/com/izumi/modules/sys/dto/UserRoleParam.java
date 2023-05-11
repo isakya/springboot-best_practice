@@ -20,7 +20,7 @@ import com.izumi.validation.Groups;
 @Getter
 @Setter
 @TableName("sys_user_role")
-@ApiModel(value = "UserRole对象", description = "r_用户角色关系")
+@ApiModel(value = "UserRoleParam对象", description = "r_用户角色关系")
 public class UserRoleParam implements Serializable {
 
     private static final long serialVersionUID = 1L;

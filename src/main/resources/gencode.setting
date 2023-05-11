@@ -30,6 +30,9 @@ serviceFileOverride=false
 controller是否可覆盖
 controllerFileOverride=false
 param是否可覆盖
-paramFileOverride=false
+paramFileOverride=true
 pageParam是否可覆盖
 pageParamFileOverride=false
+
+# 默认字段-param中会忽略不生成
+defaultFields=createTime,createUser,updateTime,updateUser,isDeleted

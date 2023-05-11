@@ -20,7 +20,7 @@ import com.izumi.validation.Groups;
 @Getter
 @Setter
 @TableName("sys_role_menu")
-@ApiModel(value = "RoleMenu对象", description = "r_角色菜单关系")
+@ApiModel(value = "RoleMenuParam对象", description = "r_角色菜单关系")
 public class RoleMenuParam implements Serializable {
 
     private static final long serialVersionUID = 1L;

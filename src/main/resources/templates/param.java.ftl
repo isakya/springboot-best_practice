@@ -1,6 +1,11 @@
 package ${package.Other};
 <#list table.importPackages as pkg>
+<#if pkg=='java.util.Date' && hasOtherDate>
 import ${pkg};
+</#if>
+<#if pkg!='java.util.Date'>
+import ${pkg};
+</#if>
 </#list>
 <#if swagger>
 import io.swagger.annotations.ApiModel;
@@ -34,7 +39,7 @@ import ${g.basePackage}.validation.Groups;
 @TableName("${schemaName}${table.name}")
 </#if>
 <#if swagger>
-@ApiModel(value = "${entity}对象", description = "${table.comment!}")
+@ApiModel(value = "${entity}Param对象", description = "${table.comment!}")
 </#if>
 <#if superEntityClass??>
 public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if> {
@@ -51,6 +56,7 @@ public class ${entity}Param {
 </#if>
 <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>
+    <#if !g.defaultFields?contains(field.propertyName)>
     <#if field.keyFlag>
         <#assign keyPropertyName="${field.propertyName}"/>
     </#if>
@@ -99,6 +105,7 @@ public class ${entity}Param {
     @NotNull(message = "${field.comment}不能为空" <#if field.keyFlag>, groups = {Groups.Update.class} </#if>)
     </#if>
     private ${field.propertyType} ${field.propertyName};
+    </#if>
 </#list>
 <#------------  END 字段循环遍历  ---------->
 

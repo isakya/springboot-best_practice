@@ -20,27 +20,34 @@ import com.izumi.validation.Groups;
 @Getter
 @Setter
 @TableName("sys_role")
-@ApiModel(value = "Role对象", description = "角色")
+@ApiModel(value = "RoleParam对象", description = "角色")
 public class RoleParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value="主键" , required = true )
+    @ApiModelProperty(value="角色ID" , required = true )
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    @NotNull(message = "主键不能为空" , groups = {Groups.Update.class} )
+    @NotNull(message = "角色ID不能为空" , groups = {Groups.Update.class} )
     private Long id;
 
-    @ApiModelProperty(value="角色" , required = true )
-    @NotBlank(message = "角色不能为空" )
+    @ApiModelProperty(value="角色名称" , required = true )
+    @NotBlank(message = "角色名称不能为空" )
     private String name;
 
     @ApiModelProperty(value="唯一编码" , required = true )
     @NotBlank(message = "唯一编码不能为空" )
     private String code;
 
-    @ApiModelProperty(value="角色类型" , required = true )
-    @NotNull(message = "角色类型不能为空" )
+    @ApiModelProperty(value="角色类型<sys_role_type>" , required = true )
+    @NotNull(message = "角色类型<sys_role_type>不能为空" )
     private Integer roleType;
+
+    @ApiModelProperty(value="是否启用" , required = true )
+    @NotNull(message = "是否启用不能为空" )
+    private Boolean enabled;
+
+    @ApiModelProperty(value="备注" )
+    private String remark;
 
 
 }

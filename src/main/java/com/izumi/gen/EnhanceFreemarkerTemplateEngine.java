@@ -19,6 +19,12 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
     protected void outputCustomFile(@NotNull Map<String, String> customFile, @NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
         String entityName = tableInfo.getEntityName();
         String otherPath = this.getPathInfo(OutputFile.other);
+        objectMap.put("hasOtherDate", false);
+        tableInfo.getFields().forEach(tableField -> {
+            if(!"createTime,updateTime".contains(tableField.getPropertyName()) && tableField.getColumnType().getType().equalsIgnoreCase("Date")){
+                objectMap.put("hasOtherDate", true);
+            }
+        });
         customFile.forEach((key, value) -> {
             String fileName = String.format(otherPath + File.separator + entityName + "%s", key);
             boolean isFileOverride = Convert.toBool(objectMap.get(key+"FileOverride"),false);

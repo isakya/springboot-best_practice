@@ -3,7 +3,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -21,7 +20,7 @@ import com.izumi.validation.Groups;
 @Getter
 @Setter
 @TableName("sys_menu")
-@ApiModel(value = "Menu对象", description = "菜单")
+@ApiModel(value = "MenuParam对象", description = "菜单")
 public class MenuParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -86,21 +85,6 @@ public class MenuParam implements Serializable {
 
     @ApiModelProperty(value="额外参数JSON" )
     private String variable;
-
-    @ApiModelProperty(value="创建时间" )
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value="创建用户" )
-    private Long createUser;
-
-    @ApiModelProperty(value="更新时间" )
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty(value="更新用户" )
-    private Long updateUser;
-
-    @ApiModelProperty(value="是否删除" )
-    private Boolean isDeleted;
 
 
 }

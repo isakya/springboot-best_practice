@@ -3,7 +3,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -21,7 +20,7 @@ import com.izumi.validation.Groups;
 @Getter
 @Setter
 @TableName("sys_post")
-@ApiModel(value = "Post对象", description = "岗位")
+@ApiModel(value = "PostParam对象", description = "岗位")
 public class PostParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,21 +46,6 @@ public class PostParam implements Serializable {
 
     @ApiModelProperty(value="备注" )
     private String remark;
-
-    @ApiModelProperty(value="创建时间" )
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value="创建用户" )
-    private Long createUser;
-
-    @ApiModelProperty(value="更新时间" )
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty(value="更新用户" )
-    private Long updateUser;
-
-    @ApiModelProperty(value="是否删除" )
-    private Boolean isDeleted;
 
 
 }
