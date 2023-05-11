@@ -31,6 +31,9 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
         objectMap.put("r", r);
         customFile.forEach((key, value) -> {
             String fileName = String.format(otherPath + File.separator + entityName + "%s", key);
+            if("VO.java".equalsIgnoreCase(key)) {
+                fileName = fileName.replace("dto", "vo");
+            }
             boolean isFileOverride = Convert.toBool(objectMap.get(key+"FileOverride"),false);
             if(r) {
                 if(!"PageParam.java".equalsIgnoreCase(key)) {

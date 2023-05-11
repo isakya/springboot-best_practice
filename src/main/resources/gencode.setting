@@ -21,18 +21,20 @@ tablePrefix=sys_
 
 
 # 覆盖配置
-entity是否可覆盖
+# entity是否可覆盖
 entityFileOverride=true
-mapper是否可覆盖
+# mapper是否可覆盖
 mapperFileOverride=false
-service是否可覆盖
+# service是否可覆盖
 serviceFileOverride=false
-controller是否可覆盖
+# controller是否可覆盖
 controllerFileOverride=false
-param是否可覆盖
+# param是否可覆盖
 paramFileOverride=false
-pageParam是否可覆盖
+# pageParam是否可覆盖
 pageParamFileOverride=false
+# vo文件是否覆盖
+voFileOverride=true
 
 # 默认字段-param中会忽略不生成
 defaultFields=createTime,createUser,updateTime,updateUser,isDeleted

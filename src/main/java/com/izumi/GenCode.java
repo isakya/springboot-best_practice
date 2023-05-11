@@ -99,11 +99,13 @@ public class GenCode {
                     // DTO
                     customFile.put("Param.java", "/templates/param.java.ftl");
                     customFile.put("PageParam.java", "/templates/pageParam.java.ftl");
+                    customFile.put("VO.java", "/templates/vo.java.ftl");
                     // consumer.fileOverride(); // 可以覆盖
                     Map<String,Object> customMap = new HashMap<>();
                     customMap.put("g",setting);
                     customMap.put("Param.javaFileOverride",setting.get("paramFileOverride"));
                     customMap.put("PageParam.javaFileOverride",setting.get("pageParamFileOverride"));
+                    customMap.put("VO.javaFileOverride",setting.get("voFileOverride"));
                     consumer.customMap(customMap);
                     consumer.customFile(customFile);
                 })
