@@ -4,6 +4,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.izumi.auth.AuthProperties;
 import com.izumi.auth.ITokenStore;
+import com.izumi.auth.Perm;
 import com.izumi.auth.UserPerm;
 import com.izumi.exception.ServiceException;
 import com.izumi.holder.LoginUserHolder;
@@ -59,20 +60,19 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
         UserAdminTypeEnum userType = vo.getAdminType();
         if (UserAdminTypeEnum.ADMIN.equals(userType)) return true;
-
-        // 第二步：拿到请求方法中的注解@UserPerm({UserTypePerm.COMMON,UserTypePerm.ADMIN}) == userTypeEnumArr
-
-        // 第三步：userTypeEnum in ==> userTypeEnumArr
-
-        // 如果userTypeEnum在userTypeEnumArr里，则有权限，否则无权限
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            UserPerm userPerm = handlerMethod.getMethodAnnotation(UserPerm.class);
-            if (userPerm == null) {
-                ServiceException.throwBiz(AuthErrEnum.NOT_AUTH);
+            Perm perm = handlerMethod.getMethodAnnotation(Perm.class);
+            if (perm == null) {
+                // 未定义有权限标识，说明登录即可访问
+                return true;
             }
-            UserAdminTypeEnum[] userTypeEnumArr = userPerm.value();
-            if(!ArrayUtil.contains(userTypeEnumArr, userType)) {
+            String permCode = perm.value();
+            if(StrUtil.isEmpty(permCode)) {
+                // uri=/sys/user/page ==> sys/user/page ==> sys:user:page
+                permCode = StrUtil.removePrefix(uri, "/").replaceAll("/", ":");
+            }
+            if(!vo.hasPerm(permCode)) {
                 ServiceException.throwBiz(AuthErrEnum.NOT_AUTH);
             }
         }

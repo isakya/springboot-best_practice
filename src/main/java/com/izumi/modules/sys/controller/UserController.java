@@ -1,5 +1,6 @@
 package com.izumi.modules.sys.controller;
 
+import com.izumi.auth.Perm;
 import com.izumi.base.CommonPage;
 import com.izumi.base.CommonResult;
 import com.izumi.base.IdParam;
@@ -90,6 +91,7 @@ public class UserController {
      */
     @PostMapping("/user/page")
     @ApiOperation(value = "查询用户列表")
+    @Perm
     public CommonResult<CommonPage<UserVO>> page(@RequestBody UserPageParam param) {
         return CommonResult.data(userService.page(param));
     }

@@ -1,5 +1,6 @@
 package com.izumi.modules.sys.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -71,7 +72,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         vo.setToken(StrUtil.uuid());
         vo.setUserName(user.getUserName());
         vo.setAdminType(UserAdminTypeEnum.ADMIN.codeToEnum(user.getAdminType()));
-
+        vo.setPerms(CollectionUtil.newArrayList("sys:user:page"));
         // 权限分配
         // if(Integer.valueOf(1).equals(user.getUserType())) {
         //     vo.setSuperAdmin(true);
