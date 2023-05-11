@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
+import java.util.List;
 
 /**
 * <p>
@@ -88,7 +87,6 @@ public class DeptController {
         Dept dept = deptService.getById(param.getId());
         return CommonResult.data(dept);
     }
-
     /**
      * 分页查询部门列表
      * @param param
@@ -99,5 +97,16 @@ public class DeptController {
     @Perm
     public CommonResult<CommonPage<DeptVO>> page(@RequestBody DeptPageParam param) {
         return CommonResult.data(deptService.page(param));
+    }
+    /**
+     * 查询部门列表
+     * @param param
+     * @return
+     */
+    @PostMapping("/dept/list")
+    @ApiOperation(value = "查询部门列表")
+    @Perm
+    public CommonResult<List<Dept>> list(@RequestBody DeptPageParam param) {
+        return CommonResult.data(deptService.list(param.buildQueryWrapper()));
     }
 }

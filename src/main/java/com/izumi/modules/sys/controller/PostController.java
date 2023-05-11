@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-
 /**
 * <p>
     * 岗位 前端控制器
@@ -88,7 +86,6 @@ public class PostController {
         Post post = postService.getById(param.getId());
         return CommonResult.data(post);
     }
-
     /**
      * 分页查询岗位列表
      * @param param

@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
+import java.util.List;
 
 /**
 * <p>
@@ -88,7 +87,6 @@ public class MenuController {
         Menu menu = menuService.getById(param.getId());
         return CommonResult.data(menu);
     }
-
     /**
      * 分页查询菜单列表
      * @param param
@@ -99,5 +97,16 @@ public class MenuController {
     @Perm
     public CommonResult<CommonPage<MenuVO>> page(@RequestBody MenuPageParam param) {
         return CommonResult.data(menuService.page(param));
+    }
+    /**
+     * 查询菜单列表
+     * @param param
+     * @return
+     */
+    @PostMapping("/menu/list")
+    @ApiOperation(value = "查询菜单列表")
+    @Perm
+    public CommonResult<List<Menu>> list(@RequestBody MenuPageParam param) {
+        return CommonResult.data(menuService.list(param.buildQueryWrapper()));
     }
 }

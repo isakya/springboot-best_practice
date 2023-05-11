@@ -1,6 +1,7 @@
 package com.izumi.gen;
 
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
@@ -9,7 +10,9 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import javax.validation.constraints.NotNull;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 代码生成器支持自定义[DTO\VO等]模版
@@ -26,6 +29,11 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
                 objectMap.put("hasOtherDate", true);
             }
         });
+        // 表中有id/parent_id/name字段时，说明为树
+        List<String> fieldNameList = tableInfo.getFields().stream().map(item -> {
+            return item.getName();
+        }).collect(Collectors.toList());
+        objectMap.put("isTree", CollectionUtil.containsAll(fieldNameList, CollectionUtil.newArrayList("id", "name", "parent_id")));
         // 是否为中间表
         final boolean r = StrUtil.isNotEmpty(tableInfo.getComment()) && tableInfo.getComment().startsWith("r_");
         objectMap.put("r", r);

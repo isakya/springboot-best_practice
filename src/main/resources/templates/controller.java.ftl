@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
+<#if isTree>
+import java.util.List;
+</#if>
 
 /**
 * <p>
@@ -88,7 +89,6 @@ public class ${entity}Controller {
         ${entity} ${table.entityPath} = ${table.entityPath}Service.getById(param.getId());
         return CommonResult.data(${table.entityPath});
     }
-
     /**
      * 分页查询${table.comment!}列表
      * @param param
@@ -100,4 +100,17 @@ public class ${entity}Controller {
     public CommonResult<CommonPage<${entity}VO>> page(@RequestBody ${entity}PageParam param) {
         return CommonResult.data(${table.entityPath}Service.page(param));
     }
+    <#if isTree>
+    /**
+     * 查询${table.comment!}列表
+     * @param param
+     * @return
+     */
+    @PostMapping("/${table.entityPath}/list")
+    @ApiOperation(value = "查询${table.comment!}列表")
+    @Perm
+    public CommonResult<List<${entity}>> list(@RequestBody ${entity}PageParam param) {
+        return CommonResult.data(${table.entityPath}Service.list(param.buildQueryWrapper()));
+    }
+    </#if>
 }
