@@ -2,6 +2,7 @@ package com.izumi.gen;
 
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
@@ -30,5 +31,14 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
             boolean isFileOverride = Convert.toBool(objectMap.get(key+"FileOverride"),false);
             this.outputFile(new File(fileName), objectMap, value, isFileOverride);
         });
+    }
+
+    @Override
+    protected void outputController(@org.jetbrains.annotations.NotNull TableInfo tableInfo, @org.jetbrains.annotations.NotNull Map<String, Object> objectMap) {
+        // 中间表不生成controller，用表的注释前缀 r_ 来识别中间表
+        if(StrUtil.isNotEmpty(tableInfo.getComment()) && tableInfo.getComment().startsWith("r_")) {
+            return;
+        }
+        super.outputController(tableInfo, objectMap);
     }
 }
