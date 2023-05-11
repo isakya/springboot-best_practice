@@ -1,6 +1,7 @@
 package com.izumi.gen;
 
 
+import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
@@ -20,7 +21,8 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
         String otherPath = this.getPathInfo(OutputFile.other);
         customFile.forEach((key, value) -> {
             String fileName = String.format(otherPath + File.separator + entityName + "%s", key);
-            this.outputFile(new File(fileName), objectMap, value, this.getConfigBuilder().getInjectionConfig().isFileOverride());
+            boolean isFileOverride = Convert.toBool(objectMap.get(key+"FileOverride"),false);
+            this.outputFile(new File(fileName), objectMap, value, isFileOverride);
         });
     }
 }

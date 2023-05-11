@@ -11,7 +11,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 角色
+ * 岗位
  * </p>
  *
  * @author izumi
@@ -19,24 +19,24 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("sys_role")
-@ApiModel(value = "Role对象", description = "角色")
-public class Role implements Serializable {
+@TableName("sys_post")
+@ApiModel(value = "Post对象", description = "岗位")
+public class Post implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("角色ID")
+    @ApiModelProperty("岗位ID")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty("角色名称")
+    @ApiModelProperty("岗位名称")
     private String name;
 
     @ApiModelProperty("唯一编码")
     private String code;
 
-    @ApiModelProperty("角色类型<sys_role_type>")
-    private Integer roleType;
+    @ApiModelProperty("排序")
+    private Long sort;
 
     @ApiModelProperty("是否启用")
     private Boolean enabled;

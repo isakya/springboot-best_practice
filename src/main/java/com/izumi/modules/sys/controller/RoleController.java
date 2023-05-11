@@ -37,7 +37,7 @@ public class RoleController {
      * @param param
      * @return
      */
-    @PostMapping("/role/save")
+    @PostMapping("/sys/role/save")
     @ApiOperation(value = "添加角色")
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) RoleParam param) {
         roleService.save(param);

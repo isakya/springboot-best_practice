@@ -15,7 +15,7 @@ moduleName=sys
 # 1.模糊查询以%结尾；
 # 2.多张时使用英文逗号分割
 # tableName=cms_demo,cms_test
-tableName=sys_role
+tableName=sys_%
 # 表前辍
 tablePrefix=sys_
 
@@ -29,3 +29,7 @@ service是否可覆盖
 serviceFileOverride=false
 controller是否可覆盖
 controllerFileOverride=false
+param是否可覆盖
+paramFileOverride=false
+pageParam是否可覆盖
+pageParamFileOverride=false

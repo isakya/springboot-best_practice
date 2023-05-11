@@ -37,7 +37,7 @@ public class ${entity}Controller {
      * @param param
      * @return
      */
-    @PostMapping("/${table.entityPath}/save")
+    @PostMapping("/${package.ModuleName}/${table.entityPath}/save")
     @ApiOperation(value = "添加${table.comment!}")
     public CommonResult<?> save(@RequestBody @Validated({Groups.Save.class}) ${entity}Param param) {
         ${table.entityPath}Service.save(param);

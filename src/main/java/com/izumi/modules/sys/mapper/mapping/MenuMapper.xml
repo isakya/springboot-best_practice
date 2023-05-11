@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.izumi.modules.sys.mapper.MenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.izumi.modules.sys.entity.Menu">
+        <id column="id" property="id" />
+        <result column="app_code" property="appCode" />
+        <result column="parent_id" property="parentId" />
+        <result column="name" property="name" />
+        <result column="code" property="code" />
+        <result column="pids" property="pids" />
+        <result column="type" property="type" />
+        <result column="sort" property="sort" />
+        <result column="path" property="path" />
+        <result column="component" property="component" />
+        <result column="icon" property="icon" />
+        <result column="is_show" property="isShow" />
+        <result column="is_link" property="isLink" />
+        <result column="url" property="url" />
+        <result column="enabled" property="enabled" />
+        <result column="open_type" property="openType" />
+        <result column="is_cache" property="isCache" />
+        <result column="is_sync" property="isSync" />
+        <result column="variable" property="variable" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_user" property="updateUser" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, app_code, parent_id, name, code, pids, type, sort, path, component, icon, is_show, is_link, url, enabled, open_type, is_cache, is_sync, variable, create_time, create_user, update_time, update_user, is_deleted
+    </sql>
+
+    <select id="selectCustom" resultType="com.izumi.modules.sys.entity.Menu">
+        select * from sys_menu t ${ew.customSqlSegment}
+    </select>
+</mapper>

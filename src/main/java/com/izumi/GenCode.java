@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.generator.config.builder.Entity;
 import com.baomidou.mybatisplus.generator.config.builder.Mapper;
 import com.baomidou.mybatisplus.generator.config.builder.Service;
 import com.baomidou.mybatisplus.generator.config.po.LikeTable;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.izumi.gen.EnhanceFreemarkerTemplateEngine;
 
@@ -32,6 +33,7 @@ public class GenCode {
                             .enableSwagger() // 开启 swagger 模式
                             .fileOverride() // 覆盖已生成文件 3.5.2时已弃用
                             .disableOpenDir() // 禁止打开目录
+                            .dateType(DateType.ONLY_DATE)
                             .outputDir(projectRootDir + "/src/main/java"); // 指定输出目录
                 })
                 .packageConfig(builder -> {
@@ -61,9 +63,9 @@ public class GenCode {
                     }
                     // mapper生成策略配置
                     Mapper.Builder mapperBuilder = builder.mapperBuilder()
-                            .enableMapperAnnotation() // 启用@Mapper注解
-                            .enableBaseResultMap()
-                            .enableBaseColumnList();
+                            .enableMapperAnnotation(); // 启用@Mapper注解
+                            // .enableBaseResultMap()
+                            // .enableBaseColumnList();
                             // .fileOverride(); //可覆盖
                     if (Convert.toBool(setting.get("mapperFileOverride"), false)) {
                         mapperBuilder.fileOverride();
@@ -100,6 +102,8 @@ public class GenCode {
                     // consumer.fileOverride(); // 可以覆盖
                     Map<String,Object> customMap = new HashMap<>();
                     customMap.put("g",setting);
+                    customMap.put("Param.javaFileOverride",setting.get("paramFileOverride"));
+                    customMap.put("PageParam.javaFileOverride",setting.get("pageParamFileOverride"));
                     consumer.customMap(customMap);
                     consumer.customFile(customFile);
                 })
