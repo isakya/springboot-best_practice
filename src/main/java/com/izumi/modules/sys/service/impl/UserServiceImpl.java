@@ -20,6 +20,7 @@ import com.izumi.modules.sys.enums.UserTypeEnum;
 import com.izumi.modules.sys.mapper.UserMapper;
 import com.izumi.modules.sys.service.UserService;
 import com.izumi.modules.sys.vo.LoginVO;
+import com.izumi.modules.sys.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -47,10 +48,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public CommonPage<User> page(UserPageParam param) {
-        IPage<User> page = param.buildMpPage();
-        QueryWrapper<User> queryWrapper = param.buildQueryWrapper();
-        List<User> list = baseMapper.selectCustom(page, queryWrapper);
+    public CommonPage<UserVO> page(UserPageParam param) {
+        IPage<UserVO> page = param.buildMpPage();
+        QueryWrapper queryWrapper = param.buildQueryWrapper();
+        List<UserVO> list = baseMapper.selectCustom(page, queryWrapper);
         page.setRecords(list);
         return CommonPage.toPage(page);
     }

@@ -8,6 +8,7 @@ import com.izumi.modules.sys.dto.UserPageParam;
 import com.izumi.modules.sys.dto.UserParam;
 import com.izumi.modules.sys.entity.User;
 import com.izumi.modules.sys.service.UserService;;
+import com.izumi.modules.sys.vo.UserVO;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -87,7 +88,7 @@ public class UserController {
      */
     @PostMapping("/user/page")
     @ApiOperation(value = "查询用户列表")
-    public CommonResult<CommonPage<User>> page(@RequestBody UserPageParam param) {
+    public CommonResult<CommonPage<UserVO>> page(@RequestBody UserPageParam param) {
         return CommonResult.data(userService.page(param));
     }
 }

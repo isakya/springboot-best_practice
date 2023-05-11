@@ -7,6 +7,7 @@ import com.izumi.modules.sys.dto.UserPageParam;
 import com.izumi.modules.sys.dto.UserParam;
 import com.izumi.modules.sys.entity.User;
 import com.izumi.modules.sys.vo.LoginVO;
+import com.izumi.modules.sys.vo.UserVO;
 
 public interface UserService extends IService<User> {
     /**
@@ -27,7 +28,7 @@ public interface UserService extends IService<User> {
      * @param param
      * @return
      */
-    CommonPage<User> page(UserPageParam param);
+    CommonPage<UserVO> page(UserPageParam param);
 
     /**
      * 登录

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.izumi.modules.sys.vo.UserVO;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -20,5 +21,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    List<User> selectCustom(IPage<User>page, @Param(Constants.WRAPPER) Wrapper<User>wrapper);
+    List<UserVO> selectCustom(IPage<UserVO>page, @Param(Constants.WRAPPER) Wrapper<User>wrapper);
 }

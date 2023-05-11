@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.izumi.base.BaseJunit;
 import com.izumi.modules.sys.dto.LoginParam;
+import com.izumi.modules.sys.dto.UserPageParam;
 import com.izumi.modules.sys.entity.User;
 import com.izumi.modules.sys.mapper.UserMapper;
 import com.izumi.modules.sys.service.UserService;
@@ -33,5 +34,12 @@ class IzumiBootApplicationTests extends BaseJunit {
         loginParam.setPassword("123456");
         LoginVO loginVO = userService.login(loginParam);
         System.err.println(JSONUtil.toJsonStr(loginVO));
+    }
+
+    @Test
+    void testUserPage() {
+        UserPageParam pageParam = new UserPageParam();
+        userService.page(pageParam);
+        System.err.println(JSONUtil.toJsonStr(userService.page(pageParam).getRows()));
     }
 }
