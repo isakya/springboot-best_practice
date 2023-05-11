@@ -7,7 +7,8 @@ import ${g.basePackage}.base.IdsParam;
 import ${package.Other}.${entity}PageParam;
 import ${package.Other}.${entity}Param;
 import ${package.Entity}.${entity};
-import ${package.Service}.${table.serviceName};;
+import ${package.Service}.${table.serviceName};
+import ${package.Entity?replace("entity","vo")}.${entity}VO;
 import ${g.basePackage}.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -87,7 +88,7 @@ public class ${entity}Controller {
      */
     @PostMapping("/${table.entityPath}/page")
     @ApiOperation(value = "查询${table.comment!}列表")
-    public CommonResult<CommonPage<${entity}>> page(@RequestBody ${entity}PageParam param) {
+    public CommonResult<CommonPage<${entity}VO>> page(@RequestBody ${entity}PageParam param) {
         return CommonResult.data(${table.entityPath}Service.page(param));
     }
 }

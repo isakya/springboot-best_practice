@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 @Service
 public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> implements RoleMenuService {

@@ -7,7 +7,8 @@ import com.izumi.base.IdsParam;
 import com.izumi.modules.sys.dto.DeptPageParam;
 import com.izumi.modules.sys.dto.DeptParam;
 import com.izumi.modules.sys.entity.Dept;
-import com.izumi.modules.sys.service.DeptService;;
+import com.izumi.modules.sys.service.DeptService;
+import com.izumi.modules.sys.vo.DeptVO;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
     * </p>
 *
 * @author izumi
-* @since 2023-05-11
+* @since 2023-05-12
 */
 @RestController
 @Api(tags = "部门管理")
@@ -87,7 +88,7 @@ public class DeptController {
      */
     @PostMapping("/dept/page")
     @ApiOperation(value = "查询部门列表")
-    public CommonResult<CommonPage<Dept>> page(@RequestBody DeptPageParam param) {
+    public CommonResult<CommonPage<DeptVO>> page(@RequestBody DeptPageParam param) {
         return CommonResult.data(deptService.page(param));
     }
 }

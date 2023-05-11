@@ -2,6 +2,7 @@ package com.izumi.modules.sys.service;
 import com.izumi.base.CommonPage;
 import com.izumi.modules.sys.dto.DeptPageParam;
 import com.izumi.modules.sys.dto.DeptParam;
+import com.izumi.modules.sys.vo.DeptVO;
 import com.izumi.modules.sys.entity.Dept;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 public interface DeptService extends IService<Dept> {
      /**
@@ -32,5 +33,5 @@ public interface DeptService extends IService<Dept> {
      * @param param
      * @return
      */
-     CommonPage<Dept> page(DeptPageParam param);
+     CommonPage<DeptVO> page(DeptPageParam param);
 }

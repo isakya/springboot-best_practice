@@ -2,12 +2,12 @@ package com.izumi.modules.sys.service.impl;
 import com.izumi.base.CommonPage;
 import com.izumi.modules.sys.dto.DeptPageParam;
 import com.izumi.modules.sys.dto.DeptParam;
-import org.springframework.transaction.annotation.Transactional;
+import com.izumi.modules.sys.vo.DeptVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.BeanUtils;
 import java.util.List;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.izumi.modules.sys.entity.Dept;
 import com.izumi.modules.sys.mapper.DeptMapper;
 import com.izumi.modules.sys.service.DeptService;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
@@ -40,10 +40,10 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     }
 
     @Override
-    public CommonPage<Dept> page(DeptPageParam param) {
-        IPage<Dept> page = param.buildMpPage();
+    public CommonPage<DeptVO> page(DeptPageParam param) {
+        IPage<DeptVO> page = param.buildMpPage();
         QueryWrapper<Dept> queryWrapper = param.buildQueryWrapper();
-        List<Dept> list = baseMapper.selectCustom(page, queryWrapper);
+        List<DeptVO> list = baseMapper.selectCustom(page, queryWrapper);
         page.setRecords(list);
         return CommonPage.toPage(page);
     }

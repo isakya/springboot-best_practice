@@ -1,6 +1,7 @@
 package com.izumi.modules.sys.mapper;
 
 import com.izumi.modules.sys.entity.Post;
+import com.izumi.modules.sys.vo.PostVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,9 +17,9 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 @Mapper
 public interface PostMapper extends BaseMapper<Post> {
-    List<Post> selectCustom(IPage<Post>page, @Param(Constants.WRAPPER) Wrapper<Post>wrapper);
+    List<PostVO> selectCustom(IPage<PostVO>page, @Param(Constants.WRAPPER) Wrapper<Post>wrapper);
 }

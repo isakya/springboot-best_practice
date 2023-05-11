@@ -2,6 +2,7 @@ package com.izumi.modules.sys.service;
 import com.izumi.base.CommonPage;
 import com.izumi.modules.sys.dto.PostPageParam;
 import com.izumi.modules.sys.dto.PostParam;
+import com.izumi.modules.sys.vo.PostVO;
 import com.izumi.modules.sys.entity.Post;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 public interface PostService extends IService<Post> {
      /**
@@ -32,5 +33,5 @@ public interface PostService extends IService<Post> {
      * @param param
      * @return
      */
-     CommonPage<Post> page(PostPageParam param);
+     CommonPage<PostVO> page(PostPageParam param);
 }

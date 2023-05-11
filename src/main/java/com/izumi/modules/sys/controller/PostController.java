@@ -7,7 +7,8 @@ import com.izumi.base.IdsParam;
 import com.izumi.modules.sys.dto.PostPageParam;
 import com.izumi.modules.sys.dto.PostParam;
 import com.izumi.modules.sys.entity.Post;
-import com.izumi.modules.sys.service.PostService;;
+import com.izumi.modules.sys.service.PostService;
+import com.izumi.modules.sys.vo.PostVO;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
     * </p>
 *
 * @author izumi
-* @since 2023-05-11
+* @since 2023-05-12
 */
 @RestController
 @Api(tags = "岗位管理")
@@ -87,7 +88,7 @@ public class PostController {
      */
     @PostMapping("/post/page")
     @ApiOperation(value = "查询岗位列表")
-    public CommonResult<CommonPage<Post>> page(@RequestBody PostPageParam param) {
+    public CommonResult<CommonPage<PostVO>> page(@RequestBody PostPageParam param) {
         return CommonResult.data(postService.page(param));
     }
 }

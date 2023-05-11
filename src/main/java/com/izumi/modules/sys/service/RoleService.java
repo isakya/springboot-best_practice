@@ -2,6 +2,7 @@ package com.izumi.modules.sys.service;
 import com.izumi.base.CommonPage;
 import com.izumi.modules.sys.dto.RolePageParam;
 import com.izumi.modules.sys.dto.RoleParam;
+import com.izumi.modules.sys.vo.RoleVO;
 import com.izumi.modules.sys.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 public interface RoleService extends IService<Role> {
      /**
@@ -32,5 +33,5 @@ public interface RoleService extends IService<Role> {
      * @param param
      * @return
      */
-     CommonPage<Role> page(RolePageParam param);
+     CommonPage<RoleVO> page(RolePageParam param);
 }

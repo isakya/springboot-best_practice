@@ -2,6 +2,7 @@ package com.izumi.modules.sys.service;
 import com.izumi.base.CommonPage;
 import com.izumi.modules.sys.dto.MenuPageParam;
 import com.izumi.modules.sys.dto.MenuParam;
+import com.izumi.modules.sys.vo.MenuVO;
 import com.izumi.modules.sys.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 public interface MenuService extends IService<Menu> {
      /**
@@ -32,5 +33,5 @@ public interface MenuService extends IService<Menu> {
      * @param param
      * @return
      */
-     CommonPage<Menu> page(MenuPageParam param);
+     CommonPage<MenuVO> page(MenuPageParam param);
 }

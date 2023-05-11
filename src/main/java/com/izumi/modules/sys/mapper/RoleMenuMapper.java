@@ -1,6 +1,7 @@
 package com.izumi.modules.sys.mapper;
 
 import com.izumi.modules.sys.entity.RoleMenu;
+import com.izumi.modules.sys.vo.RoleMenuVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,9 +17,9 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 @Mapper
 public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
-    List<RoleMenu> selectCustom(IPage<RoleMenu>page, @Param(Constants.WRAPPER) Wrapper<RoleMenu>wrapper);
+    List<RoleMenuVO> selectCustom(IPage<RoleMenuVO>page, @Param(Constants.WRAPPER) Wrapper<RoleMenu>wrapper);
 }

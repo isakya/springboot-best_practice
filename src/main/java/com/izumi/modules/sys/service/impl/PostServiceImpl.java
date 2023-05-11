@@ -2,6 +2,7 @@ package com.izumi.modules.sys.service.impl;
 import com.izumi.base.CommonPage;
 import com.izumi.modules.sys.dto.PostPageParam;
 import com.izumi.modules.sys.dto.PostParam;
+import com.izumi.modules.sys.vo.PostVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.BeanUtils;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 @Service
 public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements PostService {
@@ -39,10 +40,10 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     }
 
     @Override
-    public CommonPage<Post> page(PostPageParam param) {
-        IPage<Post> page = param.buildMpPage();
+    public CommonPage<PostVO> page(PostPageParam param) {
+        IPage<PostVO> page = param.buildMpPage();
         QueryWrapper<Post> queryWrapper = param.buildQueryWrapper();
-        List<Post> list = baseMapper.selectCustom(page, queryWrapper);
+        List<PostVO> list = baseMapper.selectCustom(page, queryWrapper);
         page.setRecords(list);
         return CommonPage.toPage(page);
     }

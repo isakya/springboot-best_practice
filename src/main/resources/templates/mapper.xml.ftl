@@ -36,7 +36,7 @@
     </sql>
 
 </#if>
-    <select id="selectCustom" resultType="${package.Entity}.${entity}">
+    <select id="selectCustom" resultType="${package.Entity?replace("entity","vo")}.${entity}VO">
         select * from ${schemaName}${table.name} t ${'$'+'{ew.customSqlSegment}'}
     </select>
 </mapper>

@@ -3,6 +3,7 @@ package ${package.Service};
 import ${g.basePackage}.base.CommonPage;
 import ${package.Other}.${entity}PageParam;
 import ${package.Other}.${entity}Param;
+import ${package.Entity?replace("entity","vo")}.${entity}VO;
 </#if>
 import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
@@ -38,7 +39,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @param param
      * @return
      */
-     CommonPage<${entity}> page(${entity}PageParam param);
+     CommonPage<${entity}VO> page(${entity}PageParam param);
     </#if>
 }
 </#if>

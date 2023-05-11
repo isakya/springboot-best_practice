@@ -7,7 +7,8 @@ import com.izumi.base.IdsParam;
 import com.izumi.modules.sys.dto.MenuPageParam;
 import com.izumi.modules.sys.dto.MenuParam;
 import com.izumi.modules.sys.entity.Menu;
-import com.izumi.modules.sys.service.MenuService;;
+import com.izumi.modules.sys.service.MenuService;
+import com.izumi.modules.sys.vo.MenuVO;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
     * </p>
 *
 * @author izumi
-* @since 2023-05-11
+* @since 2023-05-12
 */
 @RestController
 @Api(tags = "菜单管理")
@@ -87,7 +88,7 @@ public class MenuController {
      */
     @PostMapping("/menu/page")
     @ApiOperation(value = "查询菜单列表")
-    public CommonResult<CommonPage<Menu>> page(@RequestBody MenuPageParam param) {
+    public CommonResult<CommonPage<MenuVO>> page(@RequestBody MenuPageParam param) {
         return CommonResult.data(menuService.page(param));
     }
 }

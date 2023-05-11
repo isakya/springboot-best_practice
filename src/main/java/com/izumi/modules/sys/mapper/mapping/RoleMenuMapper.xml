@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.izumi.modules.sys.mapper.RoleMenuMapper">
 
-    <select id="selectCustom" resultType="com.izumi.modules.sys.entity.RoleMenu">
+    <select id="selectCustom" resultType="com.izumi.modules.sys.vo.RoleMenuVO">
         select * from sys_role_menu t ${ew.customSqlSegment}
     </select>
 </mapper>

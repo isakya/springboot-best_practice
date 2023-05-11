@@ -7,7 +7,8 @@ import com.izumi.base.IdsParam;
 import com.izumi.modules.sys.dto.RolePageParam;
 import com.izumi.modules.sys.dto.RoleParam;
 import com.izumi.modules.sys.entity.Role;
-import com.izumi.modules.sys.service.RoleService;;
+import com.izumi.modules.sys.service.RoleService;
+import com.izumi.modules.sys.vo.RoleVO;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
     * </p>
 *
 * @author izumi
-* @since 2023-05-11
+* @since 2023-05-12
 */
 @RestController
 @Api(tags = "角色管理")
@@ -87,7 +88,7 @@ public class RoleController {
      */
     @PostMapping("/role/page")
     @ApiOperation(value = "查询角色列表")
-    public CommonResult<CommonPage<Role>> page(@RequestBody RolePageParam param) {
+    public CommonResult<CommonPage<RoleVO>> page(@RequestBody RolePageParam param) {
         return CommonResult.data(roleService.page(param));
     }
 }

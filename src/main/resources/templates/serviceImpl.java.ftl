@@ -3,6 +3,7 @@ package ${package.ServiceImpl};
 import ${g.basePackage}.base.CommonPage;
 import ${package.Other}.${entity}PageParam;
 import ${package.Other}.${entity}Param;
+import ${package.Entity?replace("entity","vo")}.${entity}VO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.BeanUtils;
@@ -47,10 +48,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     }
 
     @Override
-    public CommonPage<${entity}> page(${entity}PageParam param) {
-        IPage<${entity}> page = param.buildMpPage();
+    public CommonPage<${entity}VO> page(${entity}PageParam param) {
+        IPage<${entity}VO> page = param.buildMpPage();
         QueryWrapper<${entity}> queryWrapper = param.buildQueryWrapper();
-        List<${entity}> list = baseMapper.selectCustom(page, queryWrapper);
+        List<${entity}VO> list = baseMapper.selectCustom(page, queryWrapper);
         page.setRecords(list);
         return CommonPage.toPage(page);
     }

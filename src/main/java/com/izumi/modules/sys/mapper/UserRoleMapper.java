@@ -1,6 +1,7 @@
 package com.izumi.modules.sys.mapper;
 
 import com.izumi.modules.sys.entity.UserRole;
+import com.izumi.modules.sys.vo.UserRoleVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,9 +17,9 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 @Mapper
 public interface UserRoleMapper extends BaseMapper<UserRole> {
-    List<UserRole> selectCustom(IPage<UserRole>page, @Param(Constants.WRAPPER) Wrapper<UserRole>wrapper);
+    List<UserRoleVO> selectCustom(IPage<UserRoleVO>page, @Param(Constants.WRAPPER) Wrapper<UserRole>wrapper);
 }

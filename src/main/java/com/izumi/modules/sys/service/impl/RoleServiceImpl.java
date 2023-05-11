@@ -2,12 +2,12 @@ package com.izumi.modules.sys.service.impl;
 import com.izumi.base.CommonPage;
 import com.izumi.modules.sys.dto.RolePageParam;
 import com.izumi.modules.sys.dto.RoleParam;
-import org.springframework.transaction.annotation.Transactional;
+import com.izumi.modules.sys.vo.RoleVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.BeanUtils;
 import java.util.List;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.izumi.modules.sys.entity.Role;
 import com.izumi.modules.sys.mapper.RoleMapper;
 import com.izumi.modules.sys.service.RoleService;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author izumi
- * @since 2023-05-11
+ * @since 2023-05-12
  */
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
@@ -40,10 +40,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public CommonPage<Role> page(RolePageParam param) {
-        IPage<Role> page = param.buildMpPage();
+    public CommonPage<RoleVO> page(RolePageParam param) {
+        IPage<RoleVO> page = param.buildMpPage();
         QueryWrapper<Role> queryWrapper = param.buildQueryWrapper();
-        List<Role> list = baseMapper.selectCustom(page, queryWrapper);
+        List<RoleVO> list = baseMapper.selectCustom(page, queryWrapper);
         page.setRecords(list);
         return CommonPage.toPage(page);
     }
