@@ -1,9 +1,14 @@
 package com.izumi;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.setting.Setting;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.TemplateType;
+import com.baomidou.mybatisplus.generator.config.builder.Controller;
+import com.baomidou.mybatisplus.generator.config.builder.Entity;
+import com.baomidou.mybatisplus.generator.config.builder.Mapper;
+import com.baomidou.mybatisplus.generator.config.builder.Service;
 import com.baomidou.mybatisplus.generator.config.po.LikeTable;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.izumi.gen.EnhanceFreemarkerTemplateEngine;
@@ -47,23 +52,35 @@ public class GenCode {
                     }
                     builder.addTablePrefix(setting.get("tablePrefix")); // 设置过滤表前缀
                     // 实体类生成策略
-                    builder.entityBuilder()
+                    Entity.Builder entityBuilder = builder.entityBuilder()
                             .enableLombok() // 启用lombok
-                            .idType(IdType.ASSIGN_ID) // 配置主键策略
-                            .fileOverride(); // 实体类模板可覆盖
+                            .idType(IdType.ASSIGN_ID); // 配置主键策略
+                            // .fileOverride(); // 实体类模板可覆盖
+                    if (Convert.toBool(setting.get("entityFileOverride"), true)) {
+                        entityBuilder.fileOverride();
+                    }
                     // mapper生成策略配置
-                    builder.mapperBuilder()
+                    Mapper.Builder mapperBuilder = builder.mapperBuilder()
                             .enableMapperAnnotation() // 启用@Mapper注解
                             .enableBaseResultMap()
-                            .enableBaseColumnList()
-                            .fileOverride(); //可覆盖
+                            .enableBaseColumnList();
+                            // .fileOverride(); //可覆盖
+                    if (Convert.toBool(setting.get("mapperFileOverride"), false)) {
+                        mapperBuilder.fileOverride();
+                    }
                     // service生成策略配置
-                    builder.serviceBuilder()
-                            .formatServiceFileName("%sService") // 文件命名规则
-                            .fileOverride(); // 可以覆盖
+                    Service.Builder serviceBuilder = builder.serviceBuilder()
+                            .formatServiceFileName("%sService"); // 文件命名规则
+                            // .fileOverride(); // 可以覆盖
+                    if (Convert.toBool(setting.get("serviceFileOverride"), false)) {
+                        serviceBuilder.fileOverride();
+                    }
                     // controller生成策略
-                    builder.controllerBuilder()
-                            .fileOverride(); // 可以覆盖
+                    Controller.Builder controllerBuilder = builder.controllerBuilder();
+                            // .fileOverride(); // 可以覆盖
+                    if (Convert.toBool(setting.get("controllerFileOverride"), false)) {
+                        controllerBuilder.fileOverride();
+                    }
                 })
                 .templateConfig(builder -> {
                     // builder.disable(); // 禁止所有模板
@@ -80,7 +97,7 @@ public class GenCode {
                     // DTO
                     customFile.put("Param.java", "/templates/param.java.ftl");
                     customFile.put("PageParam.java", "/templates/pageParam.java.ftl");
-                    consumer.fileOverride(); // 可以覆盖
+                    // consumer.fileOverride(); // 可以覆盖
                     Map<String,Object> customMap = new HashMap<>();
                     customMap.put("g",setting);
                     consumer.customMap(customMap);

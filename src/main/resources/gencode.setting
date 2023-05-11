@@ -18,3 +18,14 @@ moduleName=sys
 tableName=sys_role
 # 表前辍
 tablePrefix=sys_
+
+
+# 覆盖配置
+entity是否可覆盖
+entityFileOverride=true
+mapper是否可覆盖
+mapperFileOverride=false
+service是否可覆盖
+serviceFileOverride=false
+controller是否可覆盖
+controllerFileOverride=false
