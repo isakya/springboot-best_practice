@@ -7,7 +7,7 @@ import com.izumi.base.IdsParam;
 import com.izumi.modules.sys.dto.RolePageParam;
 import com.izumi.modules.sys.dto.RoleParam;
 import com.izumi.modules.sys.entity.Role;
-import com.izumi.modules.sys.service.RoleService;
+import com.izumi.modules.sys.service.RoleService;;
 import com.izumi.validation.Groups;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
+/**
+* <p>
+    * 角色 前端控制器
+    * </p>
+*
+* @author izumi
+* @since 2023-05-11
+*/
 @RestController
 @Api(tags = "角色管理")
 @RequiredArgsConstructor
