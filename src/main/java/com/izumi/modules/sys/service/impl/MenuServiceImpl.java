@@ -9,13 +9,18 @@ import com.izumi.base.CommonPage;
 import com.izumi.modules.sys.dto.MenuPageParam;
 import com.izumi.modules.sys.dto.MenuParam;
 import com.izumi.modules.sys.dto.SyncRouteParam;
+import com.izumi.modules.sys.entity.RoleMenu;
+import com.izumi.modules.sys.mapper.RoleMenuMapper;
 import com.izumi.modules.sys.vo.MenuVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.transaction.annotation.Transactional;
 import com.izumi.modules.sys.entity.Menu;
 import com.izumi.modules.sys.mapper.MenuMapper;
@@ -32,7 +37,9 @@ import org.springframework.stereotype.Service;
  * @since 2023-05-12
  */
 @Service
+@RequiredArgsConstructor
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
+    private final RoleMenuMapper roleMenuMapper;
     @Override
     @Transactional(rollbackFor = Exception.class) // 表示所有的异常都要回滚
     public boolean save(MenuParam param) {
@@ -59,15 +66,33 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public void syncRoute(String appCode, List<SyncRouteParam> paramList) {
-        System.out.println(paramList);
         // 同步规则：
         // 1. 默认只同步四级数据（可用递归，也可使用4层遍历）
         // 2. 以appCode,code为唯一标识进行同步
         // 3. 只同步isSync=true或isSync=1的数据
         // 4. 同步时，有变化时，要更新，也可全字段更新
         // 5. ext扩展信息存放到variable
+        // 6. 当前端删除路由时，后端对应的也要删除掉
+
         List<String> pidList = CollectionUtil.newArrayList("0");
-        saveMenu(appCode,0L, pidList, paramList,2);
+        // 所有前端路由菜单id集合
+        List<Long> menusIds = saveMenu(appCode,0L, pidList, paramList,1);
+        LambdaQueryWrapper<Menu> delLambdaQueryWrapper = Wrappers.lambdaQuery();
+        delLambdaQueryWrapper.eq(Menu::getAppCode, appCode)
+                .notIn(Menu::getId, menusIds)
+                .eq(Menu::getIsSync, 1);
+        // 删除不在前端路由同步的菜单
+        List<Long> delIds = baseMapper.selectList(delLambdaQueryWrapper).stream().map(item -> {
+            return item.getId();
+        }).collect(Collectors.toList());
+        if(CollectionUtil.isNotEmpty(delIds)) {
+            baseMapper.deleteBatchIds(delIds);
+            // 删除角色菜单关系
+            LambdaQueryWrapper<RoleMenu> delRoleMenuWrapper = Wrappers.lambdaQuery();
+            delRoleMenuWrapper.in(RoleMenu::getMenuId, delIds);
+            roleMenuMapper.delete(delRoleMenuWrapper);
+        }
+
     }
     /**
      * 根据应用编码和菜单编码查询
@@ -89,8 +114,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
      * @param list
      * @param maxLevel
      */
-    private void saveMenu(String appCode, Long parentId,List<String> pidList,List<SyncRouteParam> list,int maxLevel) {
-        if(CollectionUtil.isEmpty(list) || maxLevel>4) return;
+    private List<Long> saveMenu(String appCode, Long parentId,List<String> pidList,List<SyncRouteParam> list,int maxLevel) {
+        if(CollectionUtil.isEmpty(list) || maxLevel>4) return new ArrayList<>();
+        List<Long> menusIds = new ArrayList<>();
         list.stream().filter(item->{
             return Boolean.TRUE.equals(item.getIsSync());
         }).forEach(item->{
@@ -115,7 +141,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             List<String> newPidList = new ArrayList<>();
             newPidList.addAll(pidList);
             newPidList.add(menu.getId().toString());
-            saveMenu(appCode,menu.getId(),newPidList,item.getChildren(),maxLevel+1);
+            menusIds.add(menu.getId());
+            List<Long> childIds = saveMenu(appCode,menu.getId(),newPidList,item.getChildren(),maxLevel+1);
+            menusIds.addAll(childIds);
         });
+        return menusIds;
     }
 }

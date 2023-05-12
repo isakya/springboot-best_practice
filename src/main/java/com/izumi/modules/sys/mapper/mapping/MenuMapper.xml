@@ -6,7 +6,7 @@
         select * from sys_menu t ${ew.customSqlSegment}
     </select>
     <!--查询某个用户拥有的权限标识-->
-    <select id="selectMenuCodeByUserId" resultType="java.lang.String">
+    <select id="selectMenuCodeByUserId" resultType="java.lang.Long">
         SELECT DISTINCT
             ( m.CODE )
         FROM
