@@ -2,13 +2,17 @@ package com.izumi.base;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.izumi.log.LogHolder;
+import com.izumi.log.LogParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -52,10 +56,19 @@ public class PageParam<T> {
         QueryWrapper queryWrapper = Wrappers.query();
         // 获取所有属性 m_{type}_{column}
         // 有表别名时 m_{alias}_{type}_{column}
-        Field fields [] = ReflectUtil.getFields(this.getClass());
-        for (int i = 0; i < fields.length; i++) {
-            Field field = fields[i];
-            String fieldName = field.getName();
+        LogParam logParam = LogHolder.get();
+        String body = "";
+        if(logParam!=null) {
+            body = logParam.getBody();
+        }
+        // 字典
+        Dict dict = Dict.create();
+        if(JSONUtil.isTypeJSONObject(body)) {
+            dict.putAll(JSONUtil.toBean(body, Dict.class));
+        }
+        Object [] keys = dict.keySet().toArray();
+        for (int i = 0; i < keys.length; i++) {
+            String fieldName = keys[i].toString();
             if(!fieldName.startsWith("m_")) continue;
             String arr [] = fieldName.split("_");
             if(arr.length != 3 && arr.length != 4) continue;
@@ -69,7 +82,7 @@ public class PageParam<T> {
                 type = arr[2];
                 column = arr[1] + "." + StrUtil.toUnderlineCase(arr[3]);
             }
-            Object fieldValue = ReflectUtil.getFieldValue(this, fieldName);
+            Object fieldValue = dict.get(fieldName);
             if(ObjectUtil.isEmpty((fieldValue))) continue;
 
             switch (type) {
