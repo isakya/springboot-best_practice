@@ -35,7 +35,7 @@ public class RbacController {
     }
     @PostMapping("/rbac/roleMenuIds")
     @ApiOperation(value = "根据角色ID获取菜单ID集合")
-    public CommonResult<List<String>> roleMenuIds(@RequestBody @Validated() RoleMenuParam param) {
+    public CommonResult<List<String>> roleMenuIds(@RequestBody @Validated({RoleMenuParam.ValidRoleId.class}) RoleMenuParam param) {
         return CommonResult.data(rbacService.roleMenuIds(param.getRoleId()));
     }
     @PostMapping("/rbac/userListByRoleId")

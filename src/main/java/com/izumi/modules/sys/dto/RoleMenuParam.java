@@ -31,12 +31,14 @@ public class RoleMenuParam implements Serializable {
     private Long id;
 
     @ApiModelProperty(value="角色ID" , required = true )
-    @NotNull(message = "角色ID不能为空" )
+    @NotNull(message = "角色ID不能为空",groups = {ValidRoleId.class})
     private Long roleId;
 
     @ApiModelProperty(value="菜单ID" , required = true )
     @NotNull(message = "菜单ID不能为空" )
     private Long menuId;
+
+    public interface ValidRoleId {}
 
 
 }

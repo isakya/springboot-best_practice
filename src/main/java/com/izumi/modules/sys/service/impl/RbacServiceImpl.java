@@ -42,7 +42,13 @@ public class RbacServiceImpl implements RbacService {
 
     @Override
     public List<String> roleMenuIds(Long roleId) {
-        return null;
+        LambdaQueryWrapper<RoleMenu> lambdaQueryWrapper = Wrappers.lambdaQuery();
+        lambdaQueryWrapper.eq(RoleMenu::getRoleId,roleId);
+        List<RoleMenu> roleMenuList = roleMenuService.list(lambdaQueryWrapper);
+        List<String> menuIds = roleMenuList.stream().map(item->{
+            return item.getMenuId().toString();
+        }).collect(Collectors.toList());
+        return menuIds;
     }
 
     @Override
