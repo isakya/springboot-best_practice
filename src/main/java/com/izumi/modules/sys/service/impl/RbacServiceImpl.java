@@ -3,6 +3,8 @@ package com.izumi.modules.sys.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.izumi.base.CommonPage;
 import com.izumi.modules.sys.dto.RoleMenuParam;
@@ -10,6 +12,7 @@ import com.izumi.modules.sys.dto.UserPageParam;
 import com.izumi.modules.sys.dto.UserRoleParam;
 import com.izumi.modules.sys.entity.RoleMenu;
 import com.izumi.modules.sys.entity.UserRole;
+import com.izumi.modules.sys.mapper.UserMapper;
 import com.izumi.modules.sys.service.RbacService;
 import com.izumi.modules.sys.service.RoleMenuService;
 import com.izumi.modules.sys.service.UserRoleService;
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class RbacServiceImpl implements RbacService {
     private final RoleMenuService roleMenuService;
     private final UserRoleService userRoleService;
+    private final UserMapper userMapper;
     @Override
     public void saveRoleMenu(List<RoleMenuParam> param) {
         if(CollectionUtil.isEmpty(param))return;
@@ -53,7 +57,12 @@ public class RbacServiceImpl implements RbacService {
 
     @Override
     public CommonPage<UserVO> userListByRoleId(UserPageParam param) {
-        return null;
+        IPage<UserVO> page = param.buildMpPage();
+        QueryWrapper queryWrapper = param.buildQueryWrapper();
+        queryWrapper.eq("ur.role_id",param.getRoleId());
+        List<UserVO> list = userMapper.selectCustom(page, queryWrapper);
+        page.setRecords(list);
+        return CommonPage.toPage(page);
     }
 
     @Override

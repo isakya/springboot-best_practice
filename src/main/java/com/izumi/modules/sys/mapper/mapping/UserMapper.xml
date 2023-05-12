@@ -3,6 +3,16 @@
 <mapper namespace="com.izumi.modules.sys.mapper.UserMapper">
 
     <select id="selectCustom" resultType="com.izumi.modules.sys.vo.UserVO">
-        select t.*, p.name as post_name from sys_user t left join sys_post p on t.post_id = p.id ${ew.customSqlSegment}
+        SELECT DISTINCT
+            ( t.id ) distinct_id,
+            t.*,
+            p.NAME AS post_name,
+            d.NAME AS dept_name
+        FROM
+            sys_user t
+                LEFT JOIN sys_post p ON t.post_id = p.id
+                LEFT JOIN sys_dept d ON t.dept_id = d.id
+                LEFT JOIN sys_user_role ur ON ur.user_id = t.id
+            ${ew.customSqlSegment}
     </select>
 </mapper>
