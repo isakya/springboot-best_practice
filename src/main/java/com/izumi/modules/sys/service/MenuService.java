@@ -2,9 +2,12 @@ package com.izumi.modules.sys.service;
 import com.izumi.base.CommonPage;
 import com.izumi.modules.sys.dto.MenuPageParam;
 import com.izumi.modules.sys.dto.MenuParam;
+import com.izumi.modules.sys.dto.SyncRouteParam;
 import com.izumi.modules.sys.vo.MenuVO;
 import com.izumi.modules.sys.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -34,4 +37,11 @@ public interface MenuService extends IService<Menu> {
      * @return
      */
      CommonPage<MenuVO> page(MenuPageParam param);
+
+     /**
+      * 同步前端路由
+      * @param appCode
+      * @param paramsList
+      */
+     void syncRoute(String appCode, List<SyncRouteParam> paramsList);
 }

@@ -7,6 +7,7 @@ import com.izumi.base.IdParam;
 import com.izumi.base.IdsParam;
 import com.izumi.modules.sys.dto.MenuPageParam;
 import com.izumi.modules.sys.dto.MenuParam;
+import com.izumi.modules.sys.dto.SyncRouteParam;
 import com.izumi.modules.sys.entity.Menu;
 import com.izumi.modules.sys.service.MenuService;
 import com.izumi.modules.sys.vo.MenuVO;
@@ -15,10 +16,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -108,5 +107,13 @@ public class MenuController {
     @Perm
     public CommonResult<List<Menu>> list(@RequestBody MenuPageParam param) {
         return CommonResult.data(menuService.list(param.buildQueryWrapper()));
+    }
+
+    @PostMapping("/menu/syncRoute")
+    @ApiOperation(value = "同步前端路由")
+    @Perm
+    public CommonResult<?> syncRoute(@RequestBody List<SyncRouteParam> params, @RequestHeader(required = false,defaultValue = "platform") String appCode) {
+        menuService.syncRoute(appCode, params);
+        return CommonResult.ok();
     }
 }
