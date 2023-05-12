@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +59,15 @@ public class RbacServiceImpl implements RbacService {
     public void saveUserRole(List<UserRoleParam> params) {
         if(CollectionUtil.isEmpty(params))return;
         List<UserRole> userRoleList = BeanUtil.copyToList(params,UserRole.class);
-        userRoleService.saveBatch(userRoleList);
+        List<UserRole> insertList = userRoleList.stream().filter(item->{
+            LambdaQueryWrapper<UserRole> lambdaQueryWrapper = Wrappers.lambdaQuery();
+            lambdaQueryWrapper.eq(UserRole::getUserId,item.getUserId())
+                    .eq(UserRole::getRoleId,item.getRoleId());
+            return userRoleService.count(lambdaQueryWrapper)==0;
+        }).collect(Collectors.toList());
+        if(CollectionUtil.isNotEmpty(insertList)) {
+            userRoleService.saveBatch(userRoleList);
+        }
     }
 
     @Override
